@@ -1,0 +1,27 @@
+@CHARSET "EUC-KR";
+.table{
+	cursor:pointer;
+}
+.content{
+	padding-left:50px;
+	width:750px;
+}
+#table_menu{
+	height:50px;
+}
+.table_content{
+	height:1000px;
+	width:100%;
+}
+.table_align_top{
+	vertical-align:top;
+}
+.table_width150{
+	width:150px;
+}
+.whole_table{
+	width:100%;
+}
+.btn{
+	margin:0 5px 0 5px;
+}
