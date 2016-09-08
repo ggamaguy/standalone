@@ -22,19 +22,13 @@
 
 <Script src="js/jquery-3.1.0.min.js"></Script>
 <Script src="js/bootstrap.min.js"></Script>
-<Script src="js/bootstrap-combobox.js"></Script>
+<Script src="js/bootstrap-select.min.js"></Script>
 <Script src="js/ajax.js"></Script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('.combobox').combobox();
-	});
-</script>
-
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <link href="css/eqMaster.css" rel="stylesheet">
-<link href="css/bootstrap-combobox.css" rel="stylesheet">
+<link href="css/bootstrap-select.min.css" rel="stylesheet">
 
 <title>공정 개선 시스템</title>
 </head>
@@ -89,13 +83,13 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td>
-						</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>
-						<select class="combobox height30" id="site" onchange="getUpperGroup(this.value);">
-								<option value="" disabled selected>사업장 선택</option>
+						<div id="siteSelection">
+						<select class="selectpicker" title="사업장 선택"
+							onchage="getUpperGroup(this.value);">
 								<c:if test="${sites.num == 0}">
 									<option value="noElement">항목이 존재 하지 않습니다</option>
 								</c:if>
@@ -105,30 +99,34 @@
 												value="${site.siteName}" /></option>
 									</c:forEach>
 								</c:if>
-						</select></td>
-						<td><select class="combobox height30" id="upperGroup">
-								<option value="" disabled selected>상위 그룹 선택</option>
-						</select></td>
-						<td><select class="combobox height30" id=subGroup">
-								<option value="" disabled selected>하위 그룹 선택</option>
-						</select></td>
+						</select></div></td>
+						<td><div id="upperGroupSelection"><select class="selectpicker" id="upperGroup"
+							title="상위 그룹 선택">
+						</select></div></td>
+						<td><div id="subGroupSelection"><select class="selectpicker" id="subGroup"
+							title="하위 그룹 선택">
+						</select></div></td>
 					</tr>
 					<tr>
-						<td><select class="combobox height30" id="eqType">
+						<td><select class="selectpicker" id="eqType" title="설비 유형 선택">
 								<option value="" disabled selected>설비 유형 선택</option>
 						</select></td>
-						<td><select class="combobox height30" id="eqDetail">
+						<td><select class="selectpicker" id="eqDetail"
+							title="설비 내역 선택">
 								<option value="" disabled selected>설비 내역 선택</option>
 						</select></td>
-						<td><select class="combobox height30" id="usingGroup">
+						<td><select class="selectpicker" id="usingGroup"
+							title="사용 부서 선택">
 								<option value="" disabled selected>사용부서 선택</option>
 						</select></td>
 					</tr>
 					<tr>
 						<td>
-						<table>
-						여기에 쿼리 결과 띄움
-						</table>
+							<table>
+								<tr>
+									<td>여기에 쿼리 결과 띄움</td>
+								</tr>
+							</table>
 						</td>
 					</tr>
 				</table>
