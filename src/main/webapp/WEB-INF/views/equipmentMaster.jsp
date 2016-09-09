@@ -88,8 +88,10 @@
 					<tr>
 						<td>
 						<div id="siteSelection">
-						<select class="selectpicker" title="사업장 선택"
-							onchage="getUpperGroup(this.value);">
+						<Button class="btn btn-default dropdown-toggle" type="select" data-toggle="dropdown">
+						<p class="site-default"></p>
+						<span class="caret"></span>
+						</Button>
 								<c:if test="${sites.num == 0}">
 									<option value="noElement">항목이 존재 하지 않습니다</option>
 								</c:if>
@@ -99,7 +101,7 @@
 												value="${site.siteName}" /></option>
 									</c:forEach>
 								</c:if>
-						</select></div></td>
+						</div></td>
 						<td><div id="upperGroupSelection"><select class="selectpicker" id="upperGroup"
 							title="상위 그룹 선택">
 						</select></div></td>
