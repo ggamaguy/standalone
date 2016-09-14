@@ -24,5 +24,13 @@ public class SubGroupFacade implements ISubGroup{
 		}
 	}
 
-	
+	@Override
+	public List<SubGroup> retrieveAllSubGroup() throws DataAccessException {
+		try{
+			return session.selectList("SubGroupFacade.getAllSubGroup");
+		}catch(DataAccessException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

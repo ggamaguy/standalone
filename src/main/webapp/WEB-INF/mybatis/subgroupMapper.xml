@@ -3,13 +3,58 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SubGroupFacade">
-	<select id="getSubGroupByUpperGroupId"  resultType="web.app.pkvalve.domains.SubGroup" parameterType="String">
+	<select id="getSubGroupByUpperGroupId" resultType="web.app.pkvalve.domains.SubGroup"
+		parameterType="String">
 		select
-			subGroupCode,
-			subGroupName
+		subGroupCode,
+		subGroupName
 		from
-			subgroup
+		subgroup
 		where
-			upperGroupCode = #{upperGroupCode}
+		upperGroupCode = #{upperGroupCode}
 	</select>
+	<select id="getEqBySiteUppergroupSubgroup" parameterType="hashMap"
+		resultType="web.app.pkvalve.domains.Equipment">
+	select
+		companyCode,
+		site.siteName,
+		uppergroup.groupName,
+		equipments.eqCode,
+		eqcatalog.eqDetail,
+		subgroup.subgroupName,
+		location.location,
+		func.funcLoc,
+		proc.ProcessName,
+		equipments.energyCode1,
+		equipments.energyCode2,
+		equipments.energyCode3
+	from equipments
+		join eqcatalog on equipments.eqCode = eqcatalog.eqCode
+		join site on equipments.siteCode = site.siteCode
+		join uppergroup on equipments.groupCode = uppergroup.groupCode
+		join subgroup on equipments.subGroupCode = subgroup.subGroupCode
+		join location on equipments.upperLocationCode = location.locationCode
+		join func on equipments.upperFunctionCode = func.functionCode
+		join proc on equipments.upperProcessCode = proc.processCode
+	where
+		equipments.siteCode = #{siteCode}
+		and equipments.groupCode = #{groupCode}
+		and equipments.subGroupCode = #{subGroupCode}
+	</select>
+	<select id="getAllSubGroup" resultType="web.app.pkvalve.domains.SubGroup">
+		select 
+			uppergroupCode,
+			subgroupcode,
+			subgroupname
+		from subgroup 
+	</select>
+	<insert id="insertSubgroup" parameterType="hashmap">
+	insert into subgroup values(#{upperGroupCode}, #{subGroupCode}, #{subGroupName})
+	</insert>
+	<update id = "updateSubgroup" parameterType="hashmap">
+	update subgroup set subgroupname = #{subGroupName} and uppergroupcode = #{upperGroupCode}where subGroupCode = #{subGroupCode}
+	</update>
+	<delete id = "deleteSubgroup" parameterType="hashmap">
+	delete from subgroup where subgroupCode = #{subGroupCode} 
+	</delete>
 </mapper>

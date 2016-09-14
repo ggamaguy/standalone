@@ -1,3 +1,7 @@
+.table{
+	border:1px solid black;
+}
+
 .height34{
 	height:34px;
 }
@@ -14,7 +18,7 @@
 
 }
 .comboBtn-width{
-	width:150px;
+	width:170px;
 }
 .btn-primary{
 	margin:auto 5px auto 5px;
@@ -25,4 +29,18 @@
 .eqMasterTable tr td{
 	min-width:220px;
 	height:40px;
+}
+.selected-msg{
+	margin-bottom:0px;
+}
+
+.defalt-msg{
+	color:grey;
+}
+.dropdown-menu{
+	cursor:pointer;
+}
+.tableWidth{
+	width:900px;
+	margin:auto;
 }

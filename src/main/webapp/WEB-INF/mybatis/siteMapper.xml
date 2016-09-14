@@ -11,4 +11,38 @@
 		from
 			site
 	</select>
+	<select id="getEqBySite" resultType="web.app.pkvalve.domains.Equipment" parameterType="hashMap">
+	select
+		companyCode,
+		site.siteName,
+		uppergroup.groupName,
+		equipments.eqCode,
+		eqcatalog.eqDetail,
+		subgroup.subgroupName,
+		location.location,
+		func.funcLoc,
+		proc.ProcessName,
+		equipments.energyCode1,
+		equipments.energyCode2,
+		equipments.energyCode3
+	from equipments
+		join eqcatalog on equipments.eqCode = eqcatalog.eqCode
+		join site on equipments.siteCode = site.siteCode
+		join uppergroup on equipments.groupCode = uppergroup.groupCode
+		join subgroup on equipments.subGroupCode = subgroup.subGroupCode
+		join location on equipments.upperLocationCode = location.locationCode
+		join func on equipments.upperFunctionCode = func.functionCode
+		join proc on equipments.upperProcessCode = proc.processCode
+	where
+		equipments.siteCode = #{siteCode}
+	</select>
+	<insert id="insertSite" parameterType="hashmap">
+		insert into site (siteName,siteCode) values(#{siteName},#{siteCode})
+	</insert>
+	<delete id="deleteSite" parameterType="hashmap">
+		delete from site where siteCode = #{siteCode}
+	</delete>
+	<update id="updateSite" parameterType="hashmap">
+		update site set siteName = #{siteName} where siteCode = #{siteCode}
+	</update>
 </mapper>

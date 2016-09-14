@@ -1,18 +1,26 @@
 package web.app.pkvalve.domains;
 
 public class SubGroup {
-	private String code;
-	private String name;
-	public String getCode() {
-		return code;
+	private String upperGroupCode;
+	private String subGroupCode;
+	private String subGroupName;
+	public String getSubGroupCode() {
+		return subGroupCode;
 	}
-	public void setCode(String code) {
-		this.code = code;
+	public void setSubGroupCode(String subGroupCode) {
+		this.subGroupCode = subGroupCode;
 	}
-	public String getName() {
-		return name;
+	public String getSubGroupName() {
+		return subGroupName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setSubGroupName(String subGroupName) {
+		this.subGroupName = subGroupName;
 	}
+	public String getUpperGroupCode() {
+		return upperGroupCode;
+	}
+	public void setUpperGroupCode(String upperGroupCode) {
+		this.upperGroupCode = upperGroupCode;
+	}
+
 }

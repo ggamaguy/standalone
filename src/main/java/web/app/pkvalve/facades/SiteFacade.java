@@ -1,5 +1,6 @@
 package web.app.pkvalve.facades;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,6 +23,45 @@ public class SiteFacade implements ISite {
 		}catch(DataAccessException e){
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	@Override
+	public int insertSite(String siteCode, String siteName) throws DataAccessException {
+		HashMap<String,String> hashmap = new HashMap<String,String>();
+		hashmap.put("siteCode", siteCode);
+		hashmap.put("siteName", siteName);
+		try{
+		return session.insert("SiteFacade.insertSite", hashmap);
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	@Override
+	public int updateSite(String siteCode, String siteName) throws DataAccessException {
+		HashMap<String,String> hashmap = new HashMap<String,String>();
+		hashmap.put("siteCode", siteCode);
+		hashmap.put("siteName", siteName);
+		try{
+		return session.update("SiteFacade.updateSite", hashmap);
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	@Override
+	public int deleteSite(String siteCode, String siteName) throws DataAccessException {
+		HashMap<String,String> hashmap = new HashMap<String,String>();
+		hashmap.put("siteCode", siteCode);
+		hashmap.put("siteName", siteName);
+		try{
+		return session.delete("SiteFacade.deleteSite", hashmap);
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
 		}
 	}
 	

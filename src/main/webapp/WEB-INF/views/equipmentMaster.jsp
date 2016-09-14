@@ -22,13 +22,10 @@
 
 <Script src="js/jquery-3.1.0.min.js"></Script>
 <Script src="js/bootstrap.min.js"></Script>
-<Script src="js/bootstrap-select.min.js"></Script>
-<Script src="js/ajax.js"></Script>
-
+<Script src="js/eqMasterAjax.js"></Script>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <link href="css/eqMaster.css" rel="stylesheet">
-<link href="css/bootstrap-select.min.css" rel="stylesheet">
 
 <title>공정 개선 시스템</title>
 </head>
@@ -63,7 +60,7 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					<li class="tq">자동제어</li>
-					<li class=""><a href="#">기준 정보</a></li>
+					<li class=""><a href="baseline">기준 정보</a></li>
 					<li class=""><a href="#">전력 자동 제어</a></li>
 					<li class=""><a href="#">최적 운전 Pattern</a></li>
 					<li class="tq">모니터링</li>
@@ -86,51 +83,152 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td>
-						<div id="siteSelection">
-						<Button class="btn btn-default dropdown-toggle" type="select" data-toggle="dropdown">
-						<p class="site-default"></p>
-						<span class="caret"></span>
-						</Button>
-								<c:if test="${sites.num == 0}">
-									<option value="noElement">항목이 존재 하지 않습니다</option>
-								</c:if>
-								<c:if test="${sites.num != 0}">
-									<c:forEach items="${sites.content}" var="site">
-										<option value="${site.siteCode}"><c:out
-												value="${site.siteName}" /></option>
-									</c:forEach>
-								</c:if>
-						</div></td>
-						<td><div id="upperGroupSelection"><select class="selectpicker" id="upperGroup"
-							title="상위 그룹 선택">
-						</select></div></td>
-						<td><div id="subGroupSelection"><select class="selectpicker" id="subGroup"
-							title="하위 그룹 선택">
-						</select></div></td>
+						<td><input type="hidden" id="site"> <input
+							type="hidden" id="group"> <input type="hidden"
+							id="subgroup">
+							<div class="btn-group" id="siteSelection">
+								<button type="button" class="comboBtn-width btn btn-default"
+									data-toggle="dropdown" id="selectedSite">
+									<p id="default-site" class="defalt-msg selected-msg">사업장 선택</p>
+								</button>
+								<button type="button"
+									class="btn btn-default dropdown-toggle height34"
+									data-toggle="dropdown">
+									<span class="caret"></span>
+								</button>
+
+								<ul class="dropdown-menu" role="menu">
+									<li class="disabled"><a>사업장 선택</a></li>
+									<li class="divider"></li>
+									<c:if test="${sites.num == 0}">
+										<li><a>항목이 존재 하지 않습니다</a></li>
+									</c:if>
+									<c:if test="${sites.num != 0}">
+										<c:forEach items="${sites.content}" var="site">
+											<li><a onclick="getUpperGroup(this.id);"
+												id="${site.siteCode}/${site.siteName}"><c:out
+														value="${site.siteName}" /></a></li>
+										</c:forEach>
+									</c:if>
+								</ul>
+							</div></td>
+						<td><div class="btn-group" id="upperGroupSelection">
+								<button type="button" class="comboBtn-width btn btn-default"
+									data-toggle="dropdown" id="selectedGroup">
+									<p id="default-upperGroup" class="defalt-msg selected-msg">상위
+										그룹 선택</p>
+								</button>
+								<button type="button"
+									class="btn btn-default dropdown-toggle height34"
+									data-toggle="dropdown">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li class="disabled"><a>상위 그룹 선택</a></li>
+								</ul>
+							</div></td>
+						<td><div class="btn-group" id="subGroupSelection">
+								<button type="button" class="comboBtn-width btn btn-default"
+									data-toggle="dropdown" id="selectedSubGroup">
+									<p id="default-subGroup" class="defalt-msg selected-msg">하위
+										그룹 선택</p>
+								</button>
+								<button type="button"
+									class="btn btn-default dropdown-toggle height34"
+									data-toggle="dropdown">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li class="disabled"><a>하위 그룹 선택</a></li>
+								</ul>
+							</div></td>
 					</tr>
 					<tr>
-						<td><select class="selectpicker" id="eqType" title="설비 유형 선택">
-								<option value="" disabled selected>설비 유형 선택</option>
-						</select></td>
-						<td><select class="selectpicker" id="eqDetail"
-							title="설비 내역 선택">
-								<option value="" disabled selected>설비 내역 선택</option>
-						</select></td>
-						<td><select class="selectpicker" id="usingGroup"
-							title="사용 부서 선택">
-								<option value="" disabled selected>사용부서 선택</option>
-						</select></td>
+						<td><input type="hidden" id="eqType"> <input
+							type="hidden" id="eqDetail"> <input type="hidden"
+							id="eqUsingGroup">
+							<div class="btn-group" id="eqTypeSelection">
+								<button type="button" class="comboBtn-width btn btn-default"
+									data-toggle="dropdown">
+									<p id="default-eqType" class="defalt-msg selected-msg">설비
+										유형 선택</p>
+								</button>
+								<button type="button"
+									class="btn btn-default dropdown-toggle height34"
+									data-toggle="dropdown">
+									<span class="caret"></span>
+								</button>
+
+								<ul class="dropdown-menu" role="menu">
+									<li class="disabled"><a>설비 유형 선택</a></li>
+									<li class="divider"></li>
+									<c:if test="${eqCategories.num == 0}">
+										<li><a>항목이 존재 하지 않습니다</a></li>
+									</c:if>
+									<c:if test="${eqCategories.num != 0}">
+									<c:set var="typeList"></c:set>
+										<c:forEach items="${eqCategories.content}" var="eqCategory">
+											<li><a onclick="getEqDetail(this.id);"
+												id="${eqCategory.eqType}"><c:out
+												value="${eqCategory.eqType}" /></a></li>
+										</c:forEach>
+									</c:if>
+								</ul>
+							</div></td>
+						<td><div class="btn-group" id="eqDetailSelection">
+								<button type="button" class="comboBtn-width btn btn-default"
+									data-toggle="dropdown" id="selectedGroup">
+									<p id="default-eqDetail" class="defalt-msg selected-msg">설비
+										내역 선택</p>
+								</button>
+								<button type="button"
+									class="btn btn-default dropdown-toggle height34"
+									data-toggle="dropdown">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li class="disabled"><a>설비 내역 선택</a></li>
+								</ul>
+							</div></td>
+						<td><div class="btn-group" id="usingGroupSelection">
+								<button type="button" class="comboBtn-width btn btn-default"
+									data-toggle="dropdown">
+									<p id="default-usingGroup" class="defalt-msg selected-msg">사용
+										부서 선택</p>
+								</button>
+								<button type="button"
+									class="btn btn-default dropdown-toggle height34"
+									data-toggle="dropdown">
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li class="disabled"><a>사용 부서 선택</a></li>
+								</ul>
+							</div></td>
 					</tr>
-					<tr>
-						<td>
-							<table>
-								<tr>
-									<td>여기에 쿼리 결과 띄움</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
+				</table>
+				<table id="eqTable" class="table pre-scrollable tableWidth">
+					<thead>
+						<tr>
+							<th>회사 코드</th>
+							<th>사업장</th>
+							<th>설비그룹</th>
+							<th>설비코드</th>
+							<th>내역</th>
+							<th>조직</th>
+							<th>위치</th>
+							<th>기능위치</th>
+							<th>공정</th>
+							<th>에너지1</th>
+							<th>에너지2</th>
+							<th>에너지3</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>

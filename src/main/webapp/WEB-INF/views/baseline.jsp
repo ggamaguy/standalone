@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,12 +22,13 @@
 
 <Script src="js/jquery-3.1.0.min.js"></Script>
 <Script src="js/bootstrap.min.js"></Script>
+<Script src="js/baseline.js"></Script>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
 <link href="css/dashboard.css" rel="stylesheet">
 <link href="css/tab.css" rel="stylesheet">
 <link href="css/content.css" rel="stylesheet">
-<title>°øÁ¤ °³¼± ½Ã½ºÅÛ</title>
+<title>ê³µì • ê°œì„  ì‹œìŠ¤í…œ</title>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -39,7 +41,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">°øÁ¤ °³¼± ½Ã½ºÅÛ</a>
+			<a class="navbar-brand" href="#">ê³µì • ê°œì„  ì‹œìŠ¤í…œ</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
@@ -59,24 +61,24 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="tq">ÀÚµ¿Á¦¾î</li>
-					<li class=""><a href="#">±âÁØ Á¤º¸</a></li>
-					<li class=""><a href="#">Àü·Â ÀÚµ¿ Á¦¾î</a></li>
-					<li class=""><a href="#">ÃÖÀû ¿îÀü Pattern</a></li>
-					<li class="tq">¸ð´ÏÅÍ¸µ</li>
-					<li class=""><a href="#">Àü·Â ¸ð´ÏÅÍ¸µ</a></li>
-					<li class=""><a href="#">¿¡³ÊÁö ¼º°ú Æò°¡</a></li>
+					<li class="tq">ìžë™ì œì–´</li>
+					<li class=""><a href="#">ê¸°ì¤€ ì •ë³´</a></li>
+					<li class=""><a href="#">ì „ë ¥ ìžë™ ì œì–´</a></li>
+					<li class=""><a href="#">ìµœì  ìš´ì „ Pattern</a></li>
+					<li class="tq">ëª¨ë‹ˆí„°ë§</li>
+					<li class=""><a href="#">ì „ë ¥ ëª¨ë‹ˆí„°ë§</a></li>
+					<li class=""><a href="#">ì—ë„ˆì§€ ì„±ê³¼ í‰ê°€</a></li>
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h3 class="page-header">±âÁØ Á¤º¸</h3>
+				<h3 class="page-header">ê¸°ì¤€ ì •ë³´</h3>
 				<div class="tab" role="tabpanel">
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" class="active"><a href="#Section1"
-							aria-controls="home" role="tab" data-toggle="tab">±âÁØ Á¤º¸</a></li>
+							aria-controls="home" role="tab" data-toggle="tab">ê¸°ì¤€ ì •ë³´</a></li>
 						<li role="presentation"><a href="#Section2"
-							aria-controls="profile" role="tab" data-toggle="tab">¼³ºñ Á¤º¸</a></li>
+							aria-controls="profile" role="tab" data-toggle="tab">ì„¤ë¹„ ì •ë³´</a></li>
 					</ul>
 					<!-- Tab panes -->
 					<div class="tab-content">
@@ -84,50 +86,124 @@
 							<table class="whole_table">
 								<tr>
 									<td class="table_align_top table_width150">
-									<table class="table table-hover">
+										<table class="table table-hover">
 											<thead>
 												<th>No</th>
-												<th>¸Þ´º</th>
+												<th>ë©”ë‰´</th>
 											</thead>
-											<tr><td>1</td><td>»ç¾÷Àå Á¤º¸</td></tr>
-											<tr><td>2</td><td>Á¶Á÷±¸ºÐÁ¤º¸</td></tr>
-											<tr><td>3</td><td>»óÀ§Á¶Á÷Á¤º¸</td></tr>
-											<tr><td>4</td><td>ÇÏÀ§Á¶Á÷Á¤º¸</td></tr>
-											<tr><td>5</td><td>¿¡³ÊÁö¿øÁ¤º¸</td></tr>
-											<tr><td>6</td><td>¿¡³ÊÁöÀÌ¿ëÁ¤º¸</td></tr>
-											<tr><td>7</td><td>°øÁ¤Á¤º¸</td></tr>
-											<tr><td>8</td><td>Sub°øÁ¤Á¤º¸
-											</td></tr>
-											<tr><td>9</td><td>¼³ºñ¹üÁÖ</td></tr>
-											<tr><td>10</td><td>¼³ºñ±×·ì
-											</td></tr>
-											<tr><td>11</td><td>À§Ä¡±¸ºÐÁ¤º¸</td></tr>
-											<tr><td>12</td><td>»óÀ§À§Ä¡Á¤º¸</td></tr>
-											<tr><td>13</td><td>ÇÏÀ§À§Ä¡Á¤º¸</td></tr>
+											<tr id="1-row" class="active" onclick="">
+											
+												<td>1</td>
+												<td><a href="baseline">ì‚¬ì—…ìž¥ ì •ë³´</a></td>
+											
+											</tr>
+											<tr id="2-row" onclick="">
+												<td>2</td>
+												<td>ì¡°ì§êµ¬ë¶„ì •ë³´</td>
+											</tr>
+											<tr id="3-row" onclick="">
+												<td>3</td>
+												<td><a href="uppergroup">ìƒìœ„ì¡°ì§ì •ë³´</a></td>
+											</tr>
+											<tr id="4-row" onclick="">
+												<td>4</td>
+												<td><a href="subgroup">í•˜ìœ„ì¡°ì§ì •ë³´</a></td>
+											</tr>
+											<tr id="5-row" onclick="">
+												<td>5</td>
+												<td>ì—ë„ˆì§€ì›ì •ë³´</td>
+											</tr>
+											<tr id="6-row" onclick="">
+												<td>6</td>
+												<td>ì—ë„ˆì§€ì´ìš©ì •ë³´</td>
+											</tr>
+											<tr id="7-row" onclick="">
+												<td>7</td>
+												<td>ê³µì •ì •ë³´</td>
+											</tr>
+											<tr id="8-row" onclick="">
+												<td>8</td>
+												<td>Subê³µì •ì •ë³´</td>
+											</tr>
+											<tr id="9-row" onclick="">
+												<td>9</td>
+												<td>ì„¤ë¹„ë²”ì£¼</td>
+											</tr>
+											<tr id="10-row" onclick="">
+												<td>10</td>
+												<td>ì„¤ë¹„ê·¸ë£¹</td>
+											</tr>
+											<tr id="11-row" onclick="">
+												<td>11</td>
+												<td>ìœ„ì¹˜êµ¬ë¶„ì •ë³´</td>
+											</tr>
+											<tr id="12-row" onclick="">
+												<td>12</td>
+												<td>ìƒìœ„ìœ„ì¹˜ì •ë³´</td>
+											</tr>
+											<tr id="13-row" onclick="">
+												<td>13</td>
+												<td>í•˜ìœ„ìœ„ì¹˜ì •ë³´</td>
+											</tr>
 										</table>
 									</td>
 									<td class="content">
 										<table class="table_content">
 											<tr id="table_menu">
 												<td>
-													<form>
-														<input type="button" value="½Å±Ô" class="btn btn-primary pull-right"/>
-														<input type="button" value="ÀúÀå" class="btn btn-primary pull-right"/>
-														<input type="button" value="»èÁ¦" class="btn btn-primary pull-right"/>
+													<form id="dbIO">
+														<input type="button" value="ì‹ ê·œ"
+															class="btn btn-primary pull-right" onclick="newSite()" />
+														<input type="button" value="ì €ìž¥"
+															class="btn btn-primary pull-right" onclick="saveSite()" />
+														<input type="button" value="ì‚­ì œ"
+															class="btn btn-primary pull-right" onclcik="deleteSite()" />
 													</form>
 												<td>
 											</tr>
 											<tr>
-												<td class="table_align_top">
-												<div class="btn-group">
-												<button type="button" class="btn btn-default" data-toggle="dropdown"> ¹öÆ°2   <span class="caret"></span></button>
-												</div>
+												<td id="inner-content" class="table_align_top">
+													<div>
+														<form role="form" class="form-inline" id="inputform">
+															<div class="form-group">
+																<label for="siteCode" class="sr-only">ì‚¬ì—…ìž¥ ì½”ë“œ</label> <input
+																	id="siteCodeInput" type="text" class="form-control"
+																	placeholder="ì‚¬ì—…ìž¥ ì½”ë“œ">
+															</div>
+															<div class="form-group">
+																<label for="siteName" class="sr-only">ì‚¬ì—…ìž¥ ëª…</label> <input
+																	id="siteNameInput" type="text" class="form-control"
+																	placeholder="ì‚¬ì—…ìž¥ ëª…">
+															</div>
+														</form>
+													</div>
+													<table class="table">
+														<thead>
+															<tr>
+																<th>No</th>
+																<th>ì‚¬ì—…ìž¥ ì½”ë“œ</th>
+																<th>ì‚¬ì—…ìž¥ ëª…</th>
+															</tr>
+														</thead>
+														<tbody>
+															<%
+																int i = 1;
+															%>
+															<c:forEach items="${siteList.content}" var="site">
+																<tr id="row<%=i%>" onclick="dataTableClick(this.id);">
+																	<td><%=i++%></td>
+																	<td><label class="siteCode"
+																		value="${site.siteCode}">${site.siteCode}</label></td>
+																	<td><label class="siteName"
+																		value="${site.siteName}">${site.siteName}</label></td>
+																</tr>
+															</c:forEach>
+														</tbody>
+													</table>
 												</td>
 											</tr>
 											<tr>
-												<td>
-												
-												</td>
+												<td></td>
 											</tr>
 										</table>
 									</td>

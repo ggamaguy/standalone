@@ -12,4 +12,33 @@
 		where
 			siteCode = #{siteCode}
 	</select>
+	<select id="getEqBySiteUppergroup" resultType="web.app.pkvalve.domains.Equipment" parameterType="hashmap" >
+	select
+		companyCode,
+		site.siteName,
+		uppergroup.groupName,
+		equipments.eqCode,
+		eqcatalog.eqDetail,
+		subgroup.subgroupName,
+		location.location,
+		func.funcLoc,
+		proc.ProcessName,
+		equipments.energyCode1,
+		equipments.energyCode2,
+		equipments.energyCode3
+	from equipments
+		join eqcatalog on equipments.eqCode = eqcatalog.eqCode
+		join site on equipments.siteCode = site.siteCode
+		join uppergroup on equipments.groupCode = uppergroup.groupCode
+		join subgroup on equipments.subGroupCode = subgroup.subGroupCode
+		join location on equipments.upperLocationCode = location.locationCode
+		join func on equipments.upperFunctionCode = func.functionCode
+		join proc on equipments.upperProcessCode = proc.processCode
+	where
+		equipments.siteCode = #{siteCode}
+		and equipments.groupCode = #{groupCode}
+	</select>
+	<select id="retrieveUpperGroupByGroupCode" resultType="web.app.pkvalve.domains.UpperGroup">
+		select * from uppergroup where uppergroup.groupcode = #{groupCode}
+	</select>
 </mapper>

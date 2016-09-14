@@ -24,4 +24,14 @@ public class UpperGroupFacade implements IUpperGroup{
 		}
 	}
 
+	@Override
+	public UpperGroup retrieveUpperGroupByGroupId(String groupCode) throws DataAccessException {
+		try{
+			return session.selectOne("UpperGroupFacade.retrieveUpperGroupByGroupCode",groupCode);
+		}catch(DataAccessException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }
