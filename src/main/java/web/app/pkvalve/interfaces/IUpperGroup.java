@@ -8,6 +8,9 @@ import web.app.pkvalve.domains.Equipment;
 import web.app.pkvalve.domains.UpperGroup;
 
 public interface IUpperGroup {
-	public List<UpperGroup> retrieveUpperGroup(String siteCode) throws DataAccessException;
-	public UpperGroup retrieveUpperGroupByGroupId(String groupCode) throws DataAccessException;
+	public List<UpperGroup> getUpperGroup(String siteCode) throws DataAccessException;
+	public List<UpperGroup> getAllUpperGroup() throws DataAccessException;
+	public int insertUpperGroup(String siteCode, String groupCode, String groupName) throws DataAccessException;
+	public int updateUpperGroup(String siteCode, String groupCode, String groupName) throws DataAccessException;
+	public int deleteUpperGroup(String siteCode, String groupCode, String groupName) throws DataAccessException;
 }

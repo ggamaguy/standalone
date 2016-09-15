@@ -41,20 +41,27 @@
 		and equipments.groupCode = #{groupCode}
 		and equipments.subGroupCode = #{subGroupCode}
 	</select>
-	<select id="getAllSubGroup" resultType="web.app.pkvalve.domains.SubGroup">
+	<select id="getAllSubGroupWith" resultType="web.app.pkvalve.domains.SubGroupForBaseline">
 		select 
-			uppergroupCode,
-			subgroupcode,
-			subgroupname
+			uppergroup.groupCode, 
+			uppergroup.groupName, 
+			subgroup.subGroupCode, 
+			subgroup.subgroupName 
 		from subgroup 
+		join uppergroup 
+		on subgroup.upperGroupCode = uppergroup.groupCode
 	</select>
-	<insert id="insertSubgroup" parameterType="hashmap">
-	insert into subgroup values(#{upperGroupCode}, #{subGroupCode}, #{subGroupName})
+	<insert id="insertSubGroup" parameterType="hashmap">
+		insert into 
+			subgroup(upperGroupCode, subgroupName)
+		values
+			(#{upperGroupCode}, #{subGroupName})
 	</insert>
-	<update id = "updateSubgroup" parameterType="hashmap">
-	update subgroup set subgroupname = #{subGroupName} and uppergroupcode = #{upperGroupCode}where subGroupCode = #{subGroupCode}
+	<update id = "updateSubGroup" parameterType="hashmap">
+		update subgroup 
+			set subgroupname = #{subGroupName}, uppergroupcode = #{upperGroupCode} where subGroupCode = #{subGroupCode}
 	</update>
-	<delete id = "deleteSubgroup" parameterType="hashmap">
+	<delete id = "deleteSubGroup" parameterType="hashmap">
 	delete from subgroup where subgroupCode = #{subGroupCode} 
 	</delete>
 </mapper>

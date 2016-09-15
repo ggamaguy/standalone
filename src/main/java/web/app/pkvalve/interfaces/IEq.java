@@ -14,7 +14,7 @@ public interface IEq {
 	public List<Equipment> getEqBySiteUppergroupSubgroup(String siteCOde, String groupCode, String subGroupCode) throws DataAccessException;
 	public List<EqCategory> getAllEqCategory() throws DataAccessException;
 	public List<EqCategory> getEqCategoryByEqType(String eqType) throws DataAccessException;
-	public List<SubGroup> retrieveSubGroupNameByEqTypeEqDetail(String eqType, String eqDetail)throws DataAccessException;
+	public List<SubGroup> getSubGroupNameByEqTypeEqDetail(String eqType, String eqDetail)throws DataAccessException;
 	public List<Equipment> getEqTableByEqType(String eqType) throws DataAccessException;
 	public List<Equipment> getEqTableByEqTypeEqDetail(String eqType,String eqDetail) throws DataAccessException;
 	public List<Equipment> getEqTableByEqTypeEqDetailSubGroupName(String eqType, String eqDetail, String subGroupName) throws DataAccessException;

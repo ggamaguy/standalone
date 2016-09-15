@@ -80,7 +80,7 @@ public class EqFacade implements IEq {
 		}
 	}
 	@Override
-	public List<SubGroup> retrieveSubGroupNameByEqTypeEqDetail(String eqType, String eqDetail)
+	public List<SubGroup> getSubGroupNameByEqTypeEqDetail(String eqType, String eqDetail)
 			throws DataAccessException {
 		HashMap<String,String> hashmap = new HashMap<String,String>();
 		hashmap.put("eqType", eqType);

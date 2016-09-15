@@ -6,8 +6,7 @@
 	<select id="getAllSites"  resultType="web.app.pkvalve.domains.Site">
 		select
 			siteCode,
-			siteName,
-			siteAddress
+			siteName
 		from
 			site
 	</select>
@@ -37,7 +36,7 @@
 		equipments.siteCode = #{siteCode}
 	</select>
 	<insert id="insertSite" parameterType="hashmap">
-		insert into site (siteName,siteCode) values(#{siteName},#{siteCode})
+		insert into site (siteCode, siteName)values(#{siteCode},#{siteName})
 	</insert>
 	<delete id="deleteSite" parameterType="hashmap">
 		delete from site where siteCode = #{siteCode}

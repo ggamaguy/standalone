@@ -38,7 +38,28 @@
 		equipments.siteCode = #{siteCode}
 		and equipments.groupCode = #{groupCode}
 	</select>
-	<select id="retrieveUpperGroupByGroupCode" resultType="web.app.pkvalve.domains.UpperGroup">
+	<select id="getUpperGroupByGroupCode" resultType="web.app.pkvalve.domains.UpperGroup">
 		select * from uppergroup where uppergroup.groupcode = #{groupCode}
 	</select>
+	<select id="getAllUpperGroup" resultType="web.app.pkvalve.domains.UpperGroup">
+		select 
+			siteCode,
+			groupCode,
+			groupName
+		from 
+			uppergroup
+	</select>
+	<insert id="insertUpperGroup" parameterType="hashmap">
+		insert into
+			uppergroup
+			(siteCode,groupCode,groupName)
+		values 
+			(#{siteCode},#{groupCode},#{groupName})
+	</insert>
+	<update id="updateUpperGroup" parameterType="hashmap">
+		update uppergroup set groupName = #{groupName} where groupCode = #{groupCode}
+	</update>
+	<delete id="deleteUpperGroup" parameterType="hashmap">
+		delete from uppergroup where groupCode=#{groupCode}
+	</delete>
 </mapper>

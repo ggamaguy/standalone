@@ -1,4 +1,13 @@
 @CHARSET "EUC-KR";
+.table_border{
+	border:1px solid black;
+}
+
+.selectBox{
+	width:196px;
+	height:34px;
+}
+
 .table{
 	cursor:pointer;
 }

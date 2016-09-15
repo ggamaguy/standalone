@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="EnergyUseFacade">
+	<select id="getAllEnergyUse" resultType="web.app.pkvalve.domains.EnergyUse">
+		select
+			*
+		from
+			energyuse
+	</select>
+	<insert id="insertEnergyUse" parameterType="hashmap">
+		insert into energyuse
+		values(#{code},#{name})
+	</insert>
+	<update id="updateEnergyUse" parameterType="hashmap">
+		update energyuse set name=#{name} where code=#{code}
+	</update>
+	<delete id="deleteEnergyUse" parameterType="hashmap">
+		delete from energyuse where code=#{code}
+	</delete>
+
+</mapper>

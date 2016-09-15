@@ -91,9 +91,9 @@ public class EquipmentController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/retrieveUpperGroup", method = RequestMethod.GET, produces = "application/json")
-	public JSONObject retrieveUpperGroup(@RequestParam(value = "siteCode") String siteCode) {
-		List<UpperGroup> list = uppergroupFacade.retrieveUpperGroup(siteCode);
+	@RequestMapping(value = "/getUpperGroup", method = RequestMethod.GET, produces = "application/json")
+	public JSONObject getUpperGroup(@RequestParam(value = "siteCode") String siteCode) {
+		List<UpperGroup> list = uppergroupFacade.getUpperGroup(siteCode);
 		List<Equipment> eqList = eqFacade.getEqBySite(siteCode);
 		JSONObject json = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
@@ -133,9 +133,9 @@ public class EquipmentController {
 		return json;
 	}
 
-	@RequestMapping(value = "/retrieveSubGroup", method = RequestMethod.GET, produces = "application/json")
-	public JSONObject retrieveSubGroup(@RequestParam(value="siteCode") String siteCode, @RequestParam(value = "upperGroupCode") String upperGroupCode) {
-		List<SubGroup> list = subGroupFacade.retrieveSubGroup(upperGroupCode);
+	@RequestMapping(value = "/getSubGroup", method = RequestMethod.GET, produces = "application/json")
+	public JSONObject getSubGroup(@RequestParam(value="siteCode") String siteCode, @RequestParam(value = "upperGroupCode") String upperGroupCode) {
+		List<SubGroup> list = subGroupFacade.getSubGroup(upperGroupCode);
 		List<Equipment> eqList = eqFacade.getEqBySiteUppergroup(siteCode, upperGroupCode);
 		JSONObject json = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
@@ -174,7 +174,7 @@ public class EquipmentController {
 		return json;
 	}
 	
-	@RequestMapping(value="/retrieveEqTable", method=RequestMethod.GET,produces="application/json")
+	@RequestMapping(value="/getEqTable", method=RequestMethod.GET,produces="application/json")
 	public JSONObject getEqTableBySiteGroupSubGroup(@RequestParam(value="siteCode")String siteCode,
 													@RequestParam(value="upperGroupCode")String groupCode,
 													@RequestParam(value="subGroupCode")String subGroupCode){
@@ -207,8 +207,8 @@ public class EquipmentController {
 		return json;
 	}
 
-	@RequestMapping(value="/retrieveEqDetail", method=RequestMethod.GET,produces="application/json")
-	public JSONObject retrieveEqdetail(@RequestParam(value="eqType") String eqType) throws UnsupportedEncodingException{
+	@RequestMapping(value="/getEqDetail", method=RequestMethod.GET,produces="application/json")
+	public JSONObject getEqdetail(@RequestParam(value="eqType") String eqType) throws UnsupportedEncodingException{
 		String type = java.net.URLDecoder.decode(eqType, "UTF-8");
 		List<EqCategory> eqCatalogArray = eqFacade.getEqCategoryByEqType(type);
 		List<Equipment> eqList = eqFacade.getEqTableByEqType(type);
@@ -252,9 +252,9 @@ public class EquipmentController {
 		
 		return json;
 	}
-	@RequestMapping(value="/retrieveUsingGroup",method= RequestMethod.POST, produces="application/json")
-	public JSONObject retrieveUsingGroup(@RequestParam("eqType")String eqType, @RequestParam("eqDetail")String eqDetail) throws UnsupportedEncodingException{
-		List<SubGroup> list = eqFacade.retrieveSubGroupNameByEqTypeEqDetail(eqType, eqDetail);
+	@RequestMapping(value="/getUsingGroup",method= RequestMethod.POST, produces="application/json")
+	public JSONObject getUsingGroup(@RequestParam("eqType")String eqType, @RequestParam("eqDetail")String eqDetail) throws UnsupportedEncodingException{
+		List<SubGroup> list = eqFacade.getSubGroupNameByEqTypeEqDetail(eqType, eqDetail);
 		List<Equipment> eqList = eqFacade.getEqTableByEqTypeEqDetail(eqType, eqDetail);
 		JSONObject json = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
@@ -292,8 +292,8 @@ public class EquipmentController {
 		return json;
 	}
 	
-	@RequestMapping(value="/retrieveEqTableByEqTypeEqDetailGroupName", method=RequestMethod.POST, produces="application/json")
-	public JSONObject retrieveEqTableByEqTypeEqDetailGroupName(@RequestParam("eqType")String eqType,
+	@RequestMapping(value="/getEqTableByEqTypeEqDetailGroupName", method=RequestMethod.POST, produces="application/json")
+	public JSONObject getEqTableByEqTypeEqDetailGroupName(@RequestParam("eqType")String eqType,
 																@RequestParam("eqDetail")String eqDetail,
 																@RequestParam("groupName")String groupName){
 		List<Equipment> eqList = eqFacade.getEqTableByEqTypeEqDetailSubGroupName(eqType, eqDetail, groupName);

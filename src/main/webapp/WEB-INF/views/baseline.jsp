@@ -22,11 +22,14 @@
 
 <Script src="js/jquery-3.1.0.min.js"></Script>
 <Script src="js/bootstrap.min.js"></Script>
-<Script src="js/baseline.js"></Script>
+<Script src="js/siteBaseline.js"></Script>
+<Script src="js/upperGroupBaseline.js"></Script>
+<Script src="js/subGroupBaseline.js"></Script>
+<Script src="js/energyUseBaseline.js"></Script>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
 <link href="css/dashboard.css" rel="stylesheet">
-<link href="css/tab.css" rel="stylesheet">
+<!-- <link href="css/tab.css" rel="stylesheet"> -->
 <link href="css/content.css" rel="stylesheet">
 <title>공정 개선 시스템</title>
 </head>
@@ -85,63 +88,61 @@
 						<div role="tabpanel" class="tab-pane active" id="Section1">
 							<table class="whole_table">
 								<tr>
-									<td class="table_align_top table_width150">
+									<td class="table-bordered table_align_top table_width150">
 										<table class="table table-hover">
 											<thead>
 												<th>No</th>
 												<th>메뉴</th>
 											</thead>
-											<tr id="1-row" class="active" onclick="">
-											
+											<tr id="1-row" class="active" onclick="tableClick(this.id);">
 												<td>1</td>
-												<td><a href="baseline">사업장 정보</a></td>
-											
+												<td>사업장 정보</td>
 											</tr>
-											<tr id="2-row" onclick="">
+											<tr id="2-row" onclick="tableClick(this.id);">
 												<td>2</td>
 												<td>조직구분정보</td>
 											</tr>
-											<tr id="3-row" onclick="">
+											<tr id="3-row" onclick="tableClick(this.id);">
 												<td>3</td>
-												<td><a href="uppergroup">상위조직정보</a></td>
+												<td>상위조직정보</td>
 											</tr>
-											<tr id="4-row" onclick="">
+											<tr id="4-row" onclick="tableClick(this.id);">
 												<td>4</td>
-												<td><a href="subgroup">하위조직정보</a></td>
+												<td>하위조직정보</td>
 											</tr>
-											<tr id="5-row" onclick="">
+											<tr id="5-row" onclick="tableClick(this.id);">
 												<td>5</td>
 												<td>에너지원정보</td>
 											</tr>
-											<tr id="6-row" onclick="">
+											<tr id="6-row" onclick="tableClick(this.id);">
 												<td>6</td>
 												<td>에너지이용정보</td>
 											</tr>
-											<tr id="7-row" onclick="">
+											<tr id="7-row" >
 												<td>7</td>
 												<td>공정정보</td>
 											</tr>
-											<tr id="8-row" onclick="">
+											<tr id="8-row" >
 												<td>8</td>
 												<td>Sub공정정보</td>
 											</tr>
-											<tr id="9-row" onclick="">
+											<tr id="9-row" >
 												<td>9</td>
 												<td>설비범주</td>
 											</tr>
-											<tr id="10-row" onclick="">
+											<tr id="10-row" >
 												<td>10</td>
 												<td>설비그룹</td>
 											</tr>
-											<tr id="11-row" onclick="">
+											<tr id="11-row" >
 												<td>11</td>
 												<td>위치구분정보</td>
 											</tr>
-											<tr id="12-row" onclick="">
+											<tr id="12-row" >
 												<td>12</td>
 												<td>상위위치정보</td>
 											</tr>
-											<tr id="13-row" onclick="">
+											<tr id="13-row" >
 												<td>13</td>
 												<td>하위위치정보</td>
 											</tr>
@@ -153,11 +154,11 @@
 												<td>
 													<form id="dbIO">
 														<input type="button" value="신규"
-															class="btn btn-primary pull-right" onclick="newSite()" />
+															class="btn btn-primary pull-right" onclick="insertSite()" />
 														<input type="button" value="저장"
-															class="btn btn-primary pull-right" onclick="saveSite()" />
+															class="btn btn-primary pull-right" onclick="updateSite()" />
 														<input type="button" value="삭제"
-															class="btn btn-primary pull-right" onclcik="deleteSite()" />
+															class="btn btn-primary pull-right" onclick="deleteSite()" />
 													</form>
 												<td>
 											</tr>
@@ -177,7 +178,7 @@
 															</div>
 														</form>
 													</div>
-													<table class="table">
+													<table class="table table-bordered">
 														<thead>
 															<tr>
 																<th>No</th>
@@ -190,7 +191,7 @@
 																int i = 1;
 															%>
 															<c:forEach items="${siteList.content}" var="site">
-																<tr id="row<%=i%>" onclick="dataTableClick(this.id);">
+																<tr id="row<%=i%>" onclick="SiteTableClick(this.id);">
 																	<td><%=i++%></td>
 																	<td><label class="siteCode"
 																		value="${site.siteCode}">${site.siteCode}</label></td>

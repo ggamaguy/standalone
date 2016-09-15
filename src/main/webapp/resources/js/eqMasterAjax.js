@@ -22,7 +22,7 @@ function getUpperGroup(value) {
 					"<thead><tr><th>회사 코드</th><th>사업장</th><th>설비그룹</th>	<th>설비코드</th><th>내역</th><th>조직</th><th>위치</th><th>기능위치</th><th>공정</th>	<th>에너지1</th><th>에너지2</th><th>에너지3</th></tr></thead>");*/
 
 	if (value != null) {
-		var url = "retrieveUpperGroup";
+		var url = "getUpperGroup";
 		$.ajax({
 			url : url, // Pass you Servlet Mapping / JSP Url
 			data : {
@@ -94,7 +94,7 @@ function getSubGroup(value) {
 			"<li class=\"disabled\"><a>하위 그룹 선택</a></li>");
 	$("#eqTable tbody tr").remove();
 	if (value != null) {
-		var url = "retrieveSubGroup";
+		var url = "getSubGroup";
 		$.ajax({
 			url : url,
 			data : {
@@ -152,7 +152,7 @@ function getTable(value){
 	$("#default-subGroup").replaceWith("<p id=\"default-subGroup\" class=\"selected-msg\">"+subGroupName+"</p>");
 	$("#eqTable tbody tr").remove();
 	if(value != null){
-		var url = "retrieveEqTable";
+		var url = "getEqTable";
 		$.ajax({
 			url : url,
 			data : {
@@ -223,7 +223,7 @@ function getEqDetail(value){
 	$("#subGroupSelection ul").append("<li class=\"disabled\"><a>하위 그룹 선택</a></li>");
 	
 	if(value != null){
-		var url = "retrieveEqDetail?eqType="+escape(encodeURIComponent(eqType));
+		var url = "getEqDetail?eqType="+escape(encodeURIComponent(eqType));
 		$.ajax({
 			url : url,
 			dataType : 'json',
@@ -279,7 +279,7 @@ function getEqUsingGroup(value){
 	$("#eqTable tbody tr").remove();
 
 	if(value != null){
-		var url = "retrieveUsingGroup";
+		var url = "getUsingGroup";
 		$.ajax({
 			type:'POST',
 			url : url,
@@ -332,7 +332,7 @@ function getTableByEqData(value){
 	$("#default-usingGroup").replaceWith("<p id=\"default-usingGroup\" class=\"selected-msg\">"+groupName+"</p>");
 	$("#eqTable tbody tr").remove();
 	if(value != null){
-		var url = "retrieveEqTableByEqTypeEqDetailGroupName";
+		var url = "getEqTableByEqTypeEqDetailGroupName";
 		$.ajax({
 			type:'POST',
 			url : url,

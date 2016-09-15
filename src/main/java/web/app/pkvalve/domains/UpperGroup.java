@@ -1,6 +1,7 @@
 package web.app.pkvalve.domains;
 
 public class UpperGroup {	
+	private String siteCode;
 	private String groupCode;
 	private String groupName;
 
@@ -15,5 +16,11 @@ public class UpperGroup {
 	}
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+	public String getSiteCode() {
+		return siteCode;
+	}
+	public void setSiteCode(String siteCode) {
+		this.siteCode = siteCode;
 	}
 }
