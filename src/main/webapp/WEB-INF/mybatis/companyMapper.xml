@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="CompanyFacade">
+	<select id="getAllCompany" resultType="String">
+		select
+			companyCode,
+			companyName
+		from
+			company
+	</select>
+
+</mapper>

@@ -167,6 +167,11 @@
 													<div>
 														<form role="form" class="form-inline" id="inputform">
 															<div class="form-group">
+																<label for="companyCode" class="sr-only">회사 코드</label>
+																<input id="companyCodeInput" type="text" class="form-control"
+																placeholder="회사 코드" readonly>
+															</div>
+															<div class="form-group">
 																<label for="siteCode" class="sr-only">사업장 코드</label> <input
 																	id="siteCodeInput" type="text" class="form-control"
 																	placeholder="사업장 코드">
@@ -182,6 +187,7 @@
 														<thead>
 															<tr>
 																<th>No</th>
+																<th>회사 코드</th>
 																<th>사업장 코드</th>
 																<th>사업장 명</th>
 															</tr>
@@ -193,6 +199,8 @@
 															<c:forEach items="${siteList.content}" var="site">
 																<tr id="row<%=i%>" onclick="SiteTableClick(this.id);">
 																	<td><%=i++%></td>
+																	<td><label class="companyCode"
+																		value="${site.companyCode}">${site.companyCode}</label>
 																	<td><label class="siteCode"
 																		value="${site.siteCode}">${site.siteCode}</label></td>
 																	<td><label class="siteName"

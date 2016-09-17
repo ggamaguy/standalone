@@ -42,9 +42,11 @@ function tableClick(value) {
 }
 function SiteTableClick(value) {
 
+	var companyCode = $("#" + value + " .companyCode").attr("value");
 	var code = $("#" + value + " .siteCode").attr("value");
 	var name = $("#" + value + " .siteName").attr("value");
 
+	$("#companyCodeInput").val(companyCode);
 	$("#siteCodeInput").val(code);
 	$("#siteNameInput").val(name);
 }
@@ -53,6 +55,7 @@ function insertSite() {
 		//alert("모두 입력해 주세요");
 	} else {
 		var url = "insertSite";
+		var companyCode = $("#companyCodeInput").val();
 		var siteCode = $("#siteCodeInput").val();
 		var siteName = $("#siteNameInput").val();
 		//alert(siteCode+siteName);
@@ -61,6 +64,7 @@ function insertSite() {
 					type : 'post',
 					url : url, // Pass you Servlet Mapping / JSP Url
 					data : {
+						companyCode : companyCode,
 						siteCode : siteCode,
 						siteName : siteName
 					}, // This will be passed as parameter to server
@@ -83,6 +87,7 @@ function updateSite() {
 		//alert("모두 입력해 주세요");
 	} else {
 		var url = "updateSite";
+		var companyCode = $("#companyCodeInput").val();
 		var siteCode = $("#siteCodeInput").val();
 		var siteName = $("#siteNameInput").val();
 
@@ -91,6 +96,7 @@ function updateSite() {
 					type : 'post',
 					url : url, // Pass you Servlet Mapping / JSP Url
 					data : {
+						companyCode:companyCode,
 						siteCode : siteCode,
 						siteName : siteName
 					}, // This will be passed as parameter to server
@@ -114,6 +120,7 @@ function deleteSite() {
 		//alert("모두 입력해 주세요");
 	} else {
 		var url = "deleteSite";
+		var companyCode = $("#companyCodeInput").val();
 		var siteCode = $("#siteCodeInput").val();
 		var siteName = $("#siteNameInput").val();
 		//alert(siteCode+siteName);	
@@ -122,6 +129,7 @@ function deleteSite() {
 					type : 'post',
 					url : url, // Pass you Servlet Mapping / JSP Url
 					data : {
+						companyCode : companyCode,
 						siteCode : siteCode,
 						siteName : siteName
 					}, // This will be passed as parameter to server
@@ -149,10 +157,12 @@ function getAllSites() {
 	$("#inner-content table").remove();
 	$("#inner-content")
 			.append(
-					"<table class=\"table\"><thead><tr><th>No</th><th>사업장 코드</th><th>사업장 명</th></tr></thead><table>");
+					"<table class=\"table table-bordered\"><thead><tr><th>No</th><th>회사 코드</th><th>사업장 코드</th><th>사업장 명</th></tr></thead><table>");
 	$("#inputform div").remove();
 	$("#inputform").append(	"<div class=\"form-group\">"+
-	"<label for=\"siteCode\" class=\"sr-only\">사업장 코드</label> <input "+
+	"<label for=\"companyCode\" class=\"sr-only\">회사 코드</label> <input "+
+	"id=\"companyCodeInput\" type=\"text\" class=\"form-control\" placeholder=\"회사 코드\" readonly></div>"+
+	"<div class=\"form-group\"><label for=\"siteCode\" class=\"sr-only\">사업장 코드</label> <input "+
 	"id=\"siteCodeInput\" type=\"text\" class=\"form-control\" placeholder=\"사업장 코드\"></div>"+
 	"<div class=\"form-group\"><label for=\"siteName\" class=\"sr-only\">사업장 명</label> <input "+
 	"id=\"siteNameInput\" type=\"text\" class=\"form-control\" placeholder=\"사업장 명\"></div>");
@@ -168,6 +178,7 @@ function getAllSites() {
 					$("#inner-content .table tbody").remove();
 					$("#inner-content .table").append("<tbody></tbody>");
 					for (var i = 0; i < data.rowNum; i++) {
+						var companyCode = data.table[i].companyCode;
 						var code = data.table[i].siteCode;
 						var name = data.table[i].siteName;
 						$("#inner-content .table tbody")
@@ -177,6 +188,9 @@ function getAllSites() {
 												+ "\" onclick=\"SiteTableClick(this.id);\"><td>"
 												+ (i + 1)
 												+ "</td>"
+												+ "<td><label class=\"companyCode\" value=\""
+												+ companyCode
+												+ "\">" + companyCode + "</label></td>"
 												+ "<td><label class=\"siteCode\" value=\""
 												+ code
 												+ "\">"

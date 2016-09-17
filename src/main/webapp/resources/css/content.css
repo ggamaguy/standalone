@@ -7,8 +7,12 @@
 	width:196px;
 	height:34px;
 }
+label {
+	cursor:pointer;
+}
 
 .table{
+	text-align:center;
 	cursor:pointer;
 }
 .content{

@@ -2,9 +2,15 @@ package web.app.pkvalve.domains;
 
 public class Site {
 
+	private String companyCode;
 	private String siteCode;
 	private String siteName;
-	private String siteAddress;
+	public String getCompanyCode() {
+		return companyCode;
+	}
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
+	}
 	public String getSiteCode() {
 		return siteCode;
 	}
@@ -17,11 +23,4 @@ public class Site {
 	public void setSiteName(String siteName) {
 		this.siteName = siteName;
 	}
-	public String getSiteAddress() {
-		return siteAddress;
-	}
-	public void setSiteAddress(String siteAddress) {
-		this.siteAddress = siteAddress;
-	}
-
 }

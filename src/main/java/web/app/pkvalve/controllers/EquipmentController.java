@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import web.app.pkvalve.domains.Company;
 import web.app.pkvalve.domains.EqCategory;
 import web.app.pkvalve.domains.Equipment;
 import web.app.pkvalve.domains.Site;
 import web.app.pkvalve.domains.SubGroup;
 import web.app.pkvalve.domains.UpperGroup;
+import web.app.pkvalve.facades.CompanyFacade;
 import web.app.pkvalve.facades.EnergyFacade;
 import web.app.pkvalve.facades.EqFacade;
 import web.app.pkvalve.facades.SiteFacade;
@@ -36,9 +38,11 @@ public class EquipmentController {
 	EqFacade eqFacade;
 	@Autowired
 	EnergyFacade energyFacade;
-
+	@Autowired
+	CompanyFacade companyFacade;
 
 	@RequestMapping(value = "/equipment", method = RequestMethod.GET)
+
 	public ModelAndView site() {
 		ModelAndView mv = new ModelAndView("equipmentMaster");
 		try {
@@ -50,9 +54,9 @@ public class EquipmentController {
 			JSONArray jsonArray = new JSONArray();
 			JSONArray eqCatalogJSONArray = new JSONArray();
 			for (int index = 0; index < siteArray.size(); index++) {
+				json.put("companyCode", siteArray.get(index).getCompanyCode());
 				json.put("siteName", siteArray.get(index).getSiteName());
 				json.put("siteCode", siteArray.get(index).getSiteCode());
-				json.put("siteAddress", siteArray.get(index).getSiteAddress());
 				JSONObject tempJson = new JSONObject(json);
 				jsonArray.add(tempJson);
 			}
@@ -83,7 +87,7 @@ public class EquipmentController {
 			json2.put("num", nonDuplicatedJSONArray.size());
 			json2.put("content", nonDuplicatedJSONArray);
 			mv.addObject("eqCategories",json2);
-			
+						
 		} catch (Exception e) {
 			mv.addObject("sites", null);
 			mv.addObject("eqCategories",null);
@@ -91,6 +95,72 @@ public class EquipmentController {
 		return mv;
 	}
 
+	@RequestMapping(value="/getSite", method = RequestMethod.GET,produces="application/json")
+	public JSONObject getSite(){
+			List<Site> siteArray = siteFacade.getAllSiteList();
+			JSONObject json = new JSONObject();
+			JSONArray jsonArray = new JSONArray();
+			JSONArray eqCatalogJSONArray = new JSONArray();
+			for (int index = 0; index < siteArray.size(); index++) {
+				json.put("companyCode", siteArray.get(index).getCompanyCode());
+				json.put("siteName", siteArray.get(index).getSiteName());
+				json.put("siteCode", siteArray.get(index).getSiteCode());
+				JSONObject tempJson = new JSONObject(json);
+				jsonArray.add(tempJson);
+			}
+			json.clear();
+			json.put("num", jsonArray.size());
+			json.put("content", jsonArray);
+			return json;
+	}
+	@RequestMapping(value="/getEqType", method = RequestMethod.GET,produces="application/json")
+	public JSONObject getEqType(){
+		List<EqCategory> eqCatalogArray = eqFacade.getAllEqCategory();
+		JSONObject json = new JSONObject();
+		JSONArray eqCatalogJSONArray = new JSONArray();
+		
+		for(int index = 0; index < eqCatalogArray.size(); index++){
+			json.put("eqCode", eqCatalogArray.get(index).getEqCode());
+			json.put("eqDetail", eqCatalogArray.get(index).getEqDetail());
+			json.put("eqCapacity", eqCatalogArray.get(index).getEqCapacity());
+			json.put("eqType", eqCatalogArray.get(index).getEqType());
+			JSONObject tempJson = new JSONObject(json);
+			eqCatalogJSONArray.add(tempJson);
+		}
+		json.clear();
+		JSONArray nonDuplicatedJSONArray = new JSONArray();
+		for(int i = 0;i < eqCatalogJSONArray.size();i++){
+			for(int j = 0; j < i;j++ ){
+				if(((JSONObject)eqCatalogJSONArray.get(i)).get("eqType")==((JSONObject)eqCatalogJSONArray.get(j)).get("eqType")){
+					break;
+				}
+				if(i == j+1){
+					nonDuplicatedJSONArray.add(eqCatalogJSONArray.get(i));
+				}
+			}
+		}
+		json.put("num", nonDuplicatedJSONArray.size());
+		json.put("content", nonDuplicatedJSONArray);
+		return json;
+	}
+	
+	@RequestMapping(value = "/getCompany", method = RequestMethod.GET, produces = "application/json")
+	public JSONObject getCompany(){
+		JSONObject json = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		List<Company> list 	= companyFacade.getAllCompany();
+		for(int index = 0; index < list.size();index++){
+			json.put("companyCode", list.get(index).getCompanyCode());
+			json.put("companyName", list.get(index).getCompanyName());
+			JSONObject json2 = new JSONObject(json);
+			jsonArray.add(json2);
+		}
+		json.clear();
+		json.put("num", jsonArray.size());
+		json.put("content", jsonArray);
+		return json;
+	}
+	
 	@RequestMapping(value = "/getUpperGroup", method = RequestMethod.GET, produces = "application/json")
 	public JSONObject getUpperGroup(@RequestParam(value = "siteCode") String siteCode) {
 		List<UpperGroup> list = uppergroupFacade.getUpperGroup(siteCode);
@@ -106,6 +176,7 @@ public class EquipmentController {
 		}
 		json.clear();
 		for(int index = 0; index < eqList.size(); index++ ){
+			json.put("id", eqList.get(index).getId());
 			json.put("companyCode", eqList.get(index).getCompanyCode());
 			json.put("siteName", eqList.get(index).getSiteName());
 			json.put("groupName", eqList.get(index).getGroupName());
@@ -147,6 +218,7 @@ public class EquipmentController {
 			jsonArray.add(tempJson);
 		}
 		for(int index = 0; index < eqList.size(); index++ ){
+			json.put("id", eqList.get(index).getId());
 			json.put("companyCode", eqList.get(index).getCompanyCode());
 			json.put("siteName", eqList.get(index).getSiteName());
 			json.put("groupName", eqList.get(index).getGroupName());
@@ -182,6 +254,7 @@ public class EquipmentController {
 		JSONObject json = new JSONObject();
 		JSONArray jsonArrayForTable = new JSONArray();
 		for(int index = 0; index < eqList.size(); index++ ){
+			json.put("id", eqList.get(index).getId());
 			json.put("companyCode", eqList.get(index).getCompanyCode());
 			json.put("siteName", eqList.get(index).getSiteName());
 			json.put("groupName", eqList.get(index).getGroupName());
@@ -226,6 +299,7 @@ public class EquipmentController {
 		}
 		json.clear();		
 		for(int index = 0; index < eqList.size(); index++ ){
+			json.put("id", eqList.get(index).getId());
 			json.put("companyCode", eqList.get(index).getCompanyCode());
 			json.put("siteName", eqList.get(index).getSiteName());
 			json.put("groupName", eqList.get(index).getGroupName());
@@ -266,6 +340,7 @@ public class EquipmentController {
 		}
 		json.clear();
 		for(int index = 0; index < eqList.size(); index++ ){
+			json.put("id", eqList.get(index).getId());
 			json.put("companyCode", eqList.get(index).getCompanyCode());
 			json.put("siteName", eqList.get(index).getSiteName());
 			json.put("groupName", eqList.get(index).getGroupName());
@@ -300,6 +375,7 @@ public class EquipmentController {
 		JSONObject json = new JSONObject();
 		JSONArray eqTableJSONArray = new JSONArray();
 		for(int index = 0; index < eqList.size(); index++ ){
+			json.put("id", eqList.get(index).getId());
 			json.put("companyCode", eqList.get(index).getCompanyCode());
 			json.put("siteName", eqList.get(index).getSiteName());
 			json.put("groupName", eqList.get(index).getGroupName());
@@ -321,6 +397,31 @@ public class EquipmentController {
 		json.clear();
 		json.put("rowNum", eqTableJSONArray.size());
 		json.put("table",eqTableJSONArray);
+		System.out.println(json);
+		return json;
+	}
+	
+	@RequestMapping(value="/getEqByEqId", method=RequestMethod.GET,produces="application/json")
+	public JSONObject getEqByEqId(@RequestParam(value="eqId")String eqId){
+		JSONObject json = new JSONObject();
+		Equipment equipment = eqFacade.getEqByEqId(eqId);
+		
+		json.put("id", equipment.getId());
+		json.put("companyCode", equipment.getCompanyCode());
+		json.put("siteName", equipment.getSiteName());
+		json.put("groupName", equipment.getGroupName());
+		json.put("eqCode",equipment.getEqCode());
+		json.put("eqDetail", equipment.getEqDetail());
+		json.put("subGroupName", equipment.getSubGroupName());
+		json.put("location", equipment.getLocation());
+		json.put("funcLocation",equipment.getFuncLoc());
+		json.put("processName", equipment.getProcessName());
+		equipment.setEnergyCode1(energyFacade.getEnergyType(equipment.getEnergyCode1()));
+		json.put("energy1", equipment.getEnergyCode1());
+		equipment.setEnergyCode2(energyFacade.getEnergyType(equipment.getEnergyCode2()));
+		json.put("energy2", equipment.getEnergyCode2());
+		equipment.setEnergyCode3(energyFacade.getEnergyType(equipment.getEnergyCode3()));
+		json.put("energy3", equipment.getEnergyCode3());
 		System.out.println(json);
 		return json;
 	}

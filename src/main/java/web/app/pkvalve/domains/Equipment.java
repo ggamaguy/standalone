@@ -3,7 +3,7 @@ package web.app.pkvalve.domains;
 import java.util.List;
 
 public class Equipment {
-
+	private String id;
 	private String companyCode;//회사 코드
 	private String siteName; //사업장
 	private String groupName;//설비그룹
@@ -87,5 +87,11 @@ public class Equipment {
 	}
 	public void setEnergyCode3(String energyCode3) {
 		this.energyCode3 = energyCode3;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 }

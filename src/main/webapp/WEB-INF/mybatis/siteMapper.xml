@@ -5,6 +5,7 @@
 <mapper namespace="SiteFacade">
 	<select id="getAllSites"  resultType="web.app.pkvalve.domains.Site">
 		select
+			companyCode,
 			siteCode,
 			siteName
 		from
@@ -12,7 +13,8 @@
 	</select>
 	<select id="getEqBySite" resultType="web.app.pkvalve.domains.Equipment" parameterType="hashMap">
 	select
-		companyCode,
+		equipments.id,
+		company.companyCode,
 		site.siteName,
 		uppergroup.groupName,
 		equipments.eqCode,
@@ -25,6 +27,7 @@
 		equipments.energyCode2,
 		equipments.energyCode3
 	from equipments
+		join company on company.companyCode = equipments.companyCode
 		join eqcatalog on equipments.eqCode = eqcatalog.eqCode
 		join site on equipments.siteCode = site.siteCode
 		join uppergroup on equipments.groupCode = uppergroup.groupCode
@@ -36,7 +39,7 @@
 		equipments.siteCode = #{siteCode}
 	</select>
 	<insert id="insertSite" parameterType="hashmap">
-		insert into site (siteCode, siteName)values(#{siteCode},#{siteName})
+		insert into site (companyCode,siteCode, siteName)values(#{companyCode},#{siteCode},#{siteName})
 	</insert>
 	<delete id="deleteSite" parameterType="hashmap">
 		delete from site where siteCode = #{siteCode}

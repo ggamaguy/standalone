@@ -134,4 +134,16 @@ public class EqFacade implements IEq {
 			return null;
 		}
 	}
+
+	@Override
+	public Equipment getEqByEqId(String eqId) throws DataAccessException {
+		HashMap<String,String> hashmap = new HashMap<String,String>();
+		hashmap.put("eqId", eqId);
+		try{
+			return session.selectOne("EqFacade.getEqByEqId", hashmap);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

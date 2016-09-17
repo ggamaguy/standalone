@@ -18,4 +18,5 @@ public interface IEq {
 	public List<Equipment> getEqTableByEqType(String eqType) throws DataAccessException;
 	public List<Equipment> getEqTableByEqTypeEqDetail(String eqType,String eqDetail) throws DataAccessException;
 	public List<Equipment> getEqTableByEqTypeEqDetailSubGroupName(String eqType, String eqDetail, String subGroupName) throws DataAccessException;
+	public Equipment getEqByEqId(String eqId) throws DataAccessException;
 }	

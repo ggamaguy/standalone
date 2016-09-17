@@ -1,5 +1,54 @@
-.table{
-	border:1px solid black;
+option {
+	text-align:center;
+}
+#addNewEq{
+	vertical-align:middle;
+	font-size:large;
+	height:50px;
+	color:#286090;
+}
+.modal {
+  text-align: center;
+	margin:auto;
+}
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+.modalTable{
+	width:500px;
+	margin:auto;
+}
+.modalTable .form-control{
+	width:140px;
+}
+.modalTable tr td form div label{
+	width:100px;
+	text-align:center;
+}
+
+#eqTable{
+	margin-top:30px;
+}
+#eqTable tr :hover{
+	cursor:pointer;
+}
+.table tr th {
+	text-align:center;
+}
+.table tr td{
+	text-align:center;
 }
 
 .height34{

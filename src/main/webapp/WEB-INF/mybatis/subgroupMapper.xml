@@ -16,6 +16,7 @@
 	<select id="getEqBySiteUppergroupSubgroup" parameterType="hashMap"
 		resultType="web.app.pkvalve.domains.Equipment">
 	select
+		equipments.id,
 		companyCode,
 		site.siteName,
 		uppergroup.groupName,

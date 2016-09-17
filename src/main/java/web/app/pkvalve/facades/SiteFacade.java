@@ -27,8 +27,9 @@ public class SiteFacade implements ISite {
 	}
 
 	@Override
-	public int insertSite(String siteCode, String siteName) throws DataAccessException {
+	public int insertSite(String companyCode, String siteCode, String siteName) throws DataAccessException {
 		HashMap<String,String> hashmap = new HashMap<String,String>();
+		hashmap.put("companyCode", companyCode);
 		hashmap.put("siteCode", siteCode);
 		hashmap.put("siteName", siteName);
 		try{
@@ -40,8 +41,9 @@ public class SiteFacade implements ISite {
 	}
 
 	@Override
-	public int updateSite(String siteCode, String siteName) throws DataAccessException {
+	public int updateSite(String companyCode, String siteCode, String siteName) throws DataAccessException {
 		HashMap<String,String> hashmap = new HashMap<String,String>();
+		hashmap.put("companyCode", companyCode);
 		hashmap.put("siteCode", siteCode);
 		hashmap.put("siteName", siteName);
 		try{
@@ -53,8 +55,9 @@ public class SiteFacade implements ISite {
 	}
 
 	@Override
-	public int deleteSite(String siteCode, String siteName) throws DataAccessException {
+	public int deleteSite(String companyCode, String siteCode, String siteName) throws DataAccessException {
 		HashMap<String,String> hashmap = new HashMap<String,String>();
+		hashmap.put("companyCode", companyCode);
 		hashmap.put("siteCode", siteCode);
 		hashmap.put("siteName", siteName);
 		try{

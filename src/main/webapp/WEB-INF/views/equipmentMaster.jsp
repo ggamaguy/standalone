@@ -22,7 +22,9 @@
 
 <Script src="js/jquery-3.1.0.min.js"></Script>
 <Script src="js/bootstrap.min.js"></Script>
+<Script src="js/modalEvents.js"></Script>
 <Script src="js/eqMasterAjax.js"></Script>
+
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/dashboard.css" rel="stylesheet">
 <link href="css/eqMaster.css" rel="stylesheet">
@@ -166,11 +168,11 @@
 										<li><a>항목이 존재 하지 않습니다</a></li>
 									</c:if>
 									<c:if test="${eqCategories.num != 0}">
-									<c:set var="typeList"></c:set>
+										<c:set var="typeList"></c:set>
 										<c:forEach items="${eqCategories.content}" var="eqCategory">
 											<li><a onclick="getEqDetail(this.id);"
 												id="${eqCategory.eqType}"><c:out
-												value="${eqCategory.eqType}" /></a></li>
+														value="${eqCategory.eqType}" /></a></li>
 										</c:forEach>
 									</c:if>
 								</ul>
@@ -207,7 +209,11 @@
 							</div></td>
 					</tr>
 				</table>
-				<table id="eqTable" class="table pre-scrollable tableWidth">
+
+
+
+				<table id="eqTable"
+					class="table table-bordered pre-scrollable tableWidth">
 					<thead>
 						<tr>
 							<th>회사 코드</th>
@@ -226,13 +232,220 @@
 					</thead>
 					<tbody>
 						<tr>
-							
+							<td id="addNewEq" onclick = "addNewEq();" colspan="12">
+								<span class="glyphicon glyphicon-plus-sign"></span>
+							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">장비 마스터 수정</h4>
+				</div>
+				<div class="modal-body">
+					<table class="modalTable">
+						<tr>
+							<td>
+							<input type="hidden" id="updateModalEqId">
+							<form class="form-inline">
+									<div class="form-group">
+										<label for="companyCode">회사 코드</label> 
+										<select id="updateModalCompanyCode"  class="form-control"></select>
+									</div>
+								</form></td>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="siteCode">사업장</label> 
+										<select id="updateModalSiteCode" class="form-control"></select>
+									</div>
+								</form></td>
+						</tr>
+						<tr>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="upperGroup">설비 그룹</label> 
+										<select	id="updateModalUpperGroup" class="form-control"></select>
+									</div>
+								</form></td>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="eqCode">설비 코드</label> 
+										<select id="updateModalEqCode" class="form-control"></select>
+									</div>
+								</form></td>
+						</tr>
+						<tr>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="eqDetail">설비 내역</label>
+										<input id="updateModalEqDetail" class="form-control" readonly>
+									</div>
+								</form></td>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="subGroup">조직</label> 
+										<select id="updateModalSubGroup" class="form-control"></select>
+									</div>
+								</form></td>
+						</tr>
+						<tr><td><form class="form-inline">
+									<div class="form-group">
+										<label for="Loc">위치</label> 
+										<select id="updateModalLoc" class="form-control"></select>
+									</div>
+								</form></td>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="funcLoc">기능 위치</label> 
+										<select id="updateModalFuncLoc" class="form-control"></select>
+									</div>
+								</form></td>
 
+						</tr>
+						<tr>							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="process">공정</label> 
+										<select id="updateModalProcess" class="form-control"></select>
+									</div>
+								</form></td>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="energy1">에너지1</label> 
+										<select id="updateModalEnergy1" class="form-control"></select>
+									</div>
+								</form></td>
+							
+						</tr>
+						<tr><td><form class="form-inline">
+									<div class="form-group">
+										<label for="energy2">에너지2</label> 
+										<select id="updateModalEnergy2" class="form-control"></select>
+									</div>
+								</form></td>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="energy3">에너지3</label> 
+										<select id="updateModalEnergy3" class="form-control"></select>
+									</div>
+								</form></td>
+							<td></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary">변경 사항 저장</button>
+				</div>
+			</div>
+			<!-- 모달 콘텐츠 -->
+		</div>
+		<!-- 모달 다이얼로그 -->
+	</div>
+	<!-- 모달 전체 윈도우 -->
+	<div class="modal fade" id="newEqModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">장비 마스터 수정</h4>
+				</div>
+				<div class="modal-body">
+					<table class="modalTable">
+						<tr>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label class="modalLabel" for="companyCode">회사 코드</label> <select
+											class="form-control"></select>
+									</div>
+								</form></td>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="siteCode">사업장</label> <select class="form-control"></select>
+									</div>
+								</form></td>
+						</tr>
+						<tr>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="upperGroup">설비 그룹</label> <select
+											class="form-control"></select>
+									</div>
+								</form></td>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="eqCode">설비 코드</label> <select class="form-control"></select>
+									</div>
+								</form></td>
+						</tr>
+						<tr>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="eqDetail">설비 내역</label> <select
+											class="form-control"></select>
+									</div>
+								</form></td>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="subGroup">조직</label> <select class="form-control"></select>
+									</div>
+								</form></td>
+						</tr>
+						<tr>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="funcLoc">기능 위치</label> <select
+											class="form-control"></select>
+									</div>
+								</form></td>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="process">공정</label> <select class="form-control"></select>
+									</div>
+								</form></td>
+						</tr>
+						<tr>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="energy1">에너지1</label> <select class="form-control"></select>
+									</div>
+								</form></td>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="energy2">에너지2</label> <select class="form-control"></select>
+									</div>
+								</form></td>
+						</tr>
+						<tr>
+							<td><form class="form-inline">
+									<div class="form-group">
+										<label for="energy3">에너지3</label> <select class="form-control"></select>
+									</div>
+								</form></td>
+							<td></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-primary">변경 사항 저장</button>
+				</div>
+			</div>
+			<!-- 모달 콘텐츠 -->
+		</div>
+		<!-- 모달 다이얼로그 -->
+	</div>
+	<!-- 모달 전체 윈도우 -->
 </body>
 </html>

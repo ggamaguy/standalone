@@ -42,6 +42,7 @@ public class BaselineController {
 		JSONObject json = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		for(int index = 0;index < siteList.size();index++){
+			json.put("companyCode", siteList.get(index).getCompanyCode());
 			json.put("siteName", siteList.get(index).getSiteName());
 			json.put("siteCode", siteList.get(index).getSiteCode());
 			JSONObject json2 = new JSONObject(json);
@@ -55,24 +56,24 @@ public class BaselineController {
 	}
 	
 	@RequestMapping(value="/insertSite", method = RequestMethod.POST,produces="application/json")
-	public JSONObject insertSite(@RequestParam("siteCode")String siteCode, @RequestParam("siteName")String siteName){
-		int result = siteFacade.insertSite(siteCode, siteName);
+	public JSONObject insertSite(@RequestParam("companyCode")String companyCode, @RequestParam("siteCode")String siteCode, @RequestParam("siteName")String siteName){
+		int result = siteFacade.insertSite(companyCode,siteCode, siteName);
 		JSONObject json = new JSONObject();
 		json.put("result", result);
 		return json;
 	}
 	
 	@RequestMapping(value="/updateSite", method = RequestMethod.POST, produces="application/json")
-	public JSONObject updateSite(@RequestParam("siteCode")String siteCode, @RequestParam("siteName")String siteName){
-		int result = siteFacade.updateSite(siteCode, siteName);
+	public JSONObject updateSite(@RequestParam("companyCode")String companyCode, @RequestParam("siteCode")String siteCode, @RequestParam("siteName")String siteName){
+		int result = siteFacade.updateSite(companyCode,siteCode, siteName);
 		JSONObject json = new JSONObject();
 		json.put("result", result);
 		return json;
 	}
 	
 	@RequestMapping(value="/deleteSite", method = RequestMethod.POST,produces="application/json")
-	public JSONObject deleteSite(@RequestParam("siteCode")String siteCode, @RequestParam("siteName")String siteName){
-		int result = siteFacade.deleteSite(siteCode, siteName);
+	public JSONObject deleteSite(@RequestParam("companyCode")String companyCode, @RequestParam("siteCode")String siteCode, @RequestParam("siteName")String siteName){
+		int result = siteFacade.deleteSite(companyCode,siteCode, siteName);
 		JSONObject json = new JSONObject();
 		json.put("result", result);
 		System.out.println("updateSite: "+result);
@@ -85,6 +86,7 @@ public class BaselineController {
 		JSONObject json = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 		for(int index = 0;index < siteList.size();index++){
+			json.put("companyCode", siteList.get(index).getCompanyCode());
 			json.put("siteName", siteList.get(index).getSiteName());
 			json.put("siteCode", siteList.get(index).getSiteCode());
 			JSONObject json2 = new JSONObject(json);
