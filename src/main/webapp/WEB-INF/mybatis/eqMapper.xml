@@ -112,7 +112,6 @@
 	where
 		subgroup.subgroupName = #{subGroupName};
 	</select>
-
 	<select id="getEqByEqId" resultType="web.app.pkvalve.domains.Equipment">
 	select
 		equipments.id,
@@ -139,18 +138,84 @@
 			join proc on equipments.upperProcessCode = proc.processCode
 	where equipments.id = ${eqId}
 	</select>
-
-	<update id="updateCompanyCode">
-		update equipments set where
+	<update id="updateEquipment" parameterType="web.app.pkvalve.domains.EquipmentList">
+		update 
+			equipments
+		<set>
+			<if test="companyCode != null">
+				companyCode = ${companyCode},
+			</if>
+			<if test="siteCode != null">
+				siteCode = ${siteCode},
+			</if>
+			<if test="groupCode != null">
+				groupCode = ${groupCode},
+			</if>
+			<if test="eqCode != null">
+				eqCode = ${eqCode},
+			</if>
+			<if test="subGroupCode != null">
+				subGroupCode = ${subGroupCode},
+			</if>
+			<if test="location != null">
+				upperLocationCode = ${location},
+			</if>
+			<if test="funcLocation != null">
+				upperFunctionCode = ${funcLocation},
+			</if>
+			<if test="process != null">
+				upperProcessCode = ${process},
+			</if>
+			<if test="energy1 != null">
+				energyCode1 = ${energy1},
+			</if>
+			<if test="energy2 != null">
+				energyCode2 = ${energy2},
+			</if>
+			<if test="energy3 != null">
+				energyCode3 = ${energy3}
+			</if>
+		</set>
+		where
+			id = #{id}
 	</update>
-	<update id="updateSiteCode"></update>
-	<update id="updateGroupCode"></update>
-	<update id="updateEqCode"></update>
-	<update id="updateSubGroupCode"></update>
-	<update id="updateLocation"></update>
-	<update id="updateFuncLocation"></update>
-	<update id="updateProcess"></update>
-	<update id="updateEnergy1"></update>
-	<update id="updateEnergy2"></update>
-	<update id="updateEnergy3"></update>
+	<insert id="insertEquipment" parameterType="web.app.pkvalve.domains.EquipmentList">
+		insert into equipments
+		<set>
+			<if test="companyCode != null">
+				companyCode = ${companyCode},
+			</if>
+			<if test="siteCode != null">
+				siteCode = ${siteCode},
+			</if>
+			<if test="groupCode != null">
+				groupCode = ${groupCode},
+			</if>
+			<if test="eqCode != null">
+				eqCode = ${eqCode},
+			</if>
+			<if test="subGroupCode != null">
+				subGroupCode = ${subGroupCode},
+			</if>
+			<if test="location != null">
+				upperLocationCode = ${location},
+			</if>
+			<if test="funcLocation != null">
+				upperFunctionCode = ${funcLocation},
+			</if>
+			<if test="process != null">
+				upperProcessCode = ${process},
+			</if>
+			<if test="energy1 != null">
+				energyCode1 = ${energy1},
+			</if>
+			<if test="energy2 != null">
+				energyCode2 = ${energy2},
+			</if>
+			<if test="energy3 != null">
+				energyCode3 = ${energy3}
+			</if>
+		</set>
+	</insert>
+
 </mapper>

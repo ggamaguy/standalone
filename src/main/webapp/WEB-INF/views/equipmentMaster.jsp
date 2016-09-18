@@ -342,8 +342,7 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button type="button" onclick="updateFromModal();" class="btn btn-default" data-dismiss="modal">장비 삭제</button>
-					<button type="button" class="btn btn-primary">장비 변경 사항 저장</button>
+					
 				</div>
 			</div>
 			<!-- 모달 콘텐츠 -->

@@ -1,3 +1,16 @@
+function addNewEq(){
+	modalReset();
+	setDefaultModalData();
+	setEqDetailModalData();
+	setEqFuncLocModalData();
+	setEqLocModalData();
+	setEqProcModalData();
+	setEqEnergyModalData();
+	$(".modal-footer .deleteEq").remove();
+	$(".modal-footer").append("<button type=\"button\" onclick=\"insertFromModal();\" class=\"btn btn-primary\">장비 저장</button>");
+	$("#updateModal").modal('show');	
+}
+
 function modalDrawing(data){
 
 	modalReset();
@@ -8,6 +21,8 @@ function modalDrawing(data){
 	setEqProcModalData();
 	setEqEnergyModalData();
 	
+	$(".modal-footer").prepend("<button type=\"button\" id =\"deleteEq\" onclick=\"deleteFromModal()\" class=\"btn btn-default\" data-dismiss=\"modal\">장비 삭제</button>")
+	$(".modal-footer").append("<button type=\"button\" onclick=\"updateFromModal();\" class=\"btn btn-primary\">장비 변경 사항 저장</button>");
 	$("#updateModalEqId").val(data.id);
 	$("#updateModalCompanyCode").prepend("<option class = \"default-selection\" selected=\"true\" value=\"\"disabled=\"disabled\">"+data.companyCode+"</option>");
 	$("#updateModalSiteCode").prepend("<option class = \"default-selection\" selected=\"true\" value=\"\"disabled=\"disabled\">"+data.siteName+"</option>");
@@ -55,7 +70,11 @@ function setDefaultModalData(){
 			}
 		});
 }
+
 function setSiteModalData(){
+	$("#updateModalSiteCode option").remove();
+	$("#updateModalUpperGroup option").remove();
+	$("#updateModalSubGroup option").remove();
 	var url = "getSiteByCompanyCode";
 	var companyCode = $("#updateModalCompanyCode").val();
 	$.ajax({
@@ -75,7 +94,10 @@ function setSiteModalData(){
 		}
 	});
 }
+
 function setUpperGroupModalData(){
+	$("#updateModalUpperGroup option").remove();
+	$("#updateModalSubGroup option").remove();
 	var url = "getUpperGroupList";
 	var siteCode = $("#updateModalSiteCode").val();
 	$.ajax({
@@ -96,7 +118,9 @@ function setUpperGroupModalData(){
 		}
 	});
 }
+
 function setSubGroupModalData(){
+	$("#updateModalSubGroup option").remove();
 	var url = "getSubGroupList";
 	var groupCode = $("#updateModalUpperGroup").val();
 	$.ajax({
@@ -118,6 +142,7 @@ function setSubGroupModalData(){
 	});
 	
 }
+
 function setEqCode(){
 	$("#updateModalEqCode").val($("#updateModalEqDetail").val());
 }
@@ -193,6 +218,7 @@ function setEqProcModalData(){
 		}
 	});	
 }
+
 function setEqEnergyModalData(){
 	var url = "getAllEnergyType";
 	$.ajax({
@@ -224,8 +250,10 @@ function setEqEnergyModalData(){
 		}
 	});
 }
+
 function updateFromModal(){
-	var url = "";
+	var url = "updateEquipment";
+	
 	var id = $("#updateModalEqId").val();
 	var companyCode = $("#updateModalCompanyCode").val();
 	var siteCode = $("#updateModalSiteCode").val();
@@ -239,22 +267,93 @@ function updateFromModal(){
 	var energy2 = $("#updateModalEnergy2").val();
 	var energy3 = $("#updateModalEnergy3").val();
 	
+	var json = JSON.stringfy({
+			id: id,
+			companyCode: companyCode,
+			siteCode: siteCode,
+			groupCode: groupCode,
+			eqCode: eqCode,
+			subGroupCode: subGroupCode,
+			location: upperLocationCode,
+			funcLocation: upperFunctionCode,
+			process: upperProcess,
+			energy1: energy1,
+			energy2: energy2,
+			energy3: energy3
+	});
+	alert(json);
 	$.ajax({
 		url:url,
 		type : 'post',
-		data : {},
+		data : {jsonData :  json},
 		dataType : 'json',
 		success : function(data){
-			
+			location.reload();
 		},
 		error : function(request, textStatus, errThrown){
 			alert(request.status + ',Error: ' + request.statusText);
 		}
 	});
 }
+
 function insertFromModal(){
+	var url = "updateEquipment";
 	
+	var companyCode = $("#updateModalCompanyCode").val();
+	var siteCode = $("#updateModalSiteCode").val();
+	var groupCode = $("#updateModalUpperGroup").val();
+	var eqCode = $("#updateModalEqCode").val();
+	var subGroupCode = $("#updateModalSubGroup").val();
+	var upperLocationCode = $("#updateModalLoc").val();
+	var upperFunctionCode = $("#updateModalFuncLoc").val();
+	var upperProcess = $("#updateModalProcess").val();
+	var energy1 = $("#updateModalEnergy1").val();
+	var energy2 = $("#updateModalEnergy2").val();
+	var energy3 = $("#updateModalEnergy3").val();
+	
+	var json = JSON.stringfy({
+
+			companyCode: companyCode,
+			siteCode: siteCode,
+			groupCode: groupCode,
+			eqCode: eqCode,
+			subGroupCode: subGroupCode,
+			location: upperLocationCode,
+			funcLocation: upperFunctionCode,
+			process: upperProcess,
+			energy1: energy1,
+			energy2: energy2,
+			energy3: energy3
+	});
+	alert(json);
+	$.ajax({
+		url:url,
+		type : 'post',
+		data : {jsonData :  json},
+		dataType : 'json',
+		success : function(data){
+			location.reload();
+		},
+		error : function(request, textStatus, errThrown){
+			alert(request.status + ',Error: ' + request.statusText);
+		}
+	});
 }
+
 function deleteFromModal(){
-	
+	var url = "deleteEquipment";
+	var eqId = $("#updateModalEqId").val();
+	$.ajax({
+		url:url,
+		data:{
+			eqId : eqId
+		},
+		dataType : 'json',
+		success :function(data){
+			location.reload();
+		},
+		error : function(request, textStatus, errThrown){
+			alert(request.status + ',Error: ' + request.statusText);
+		}
+	});
 }

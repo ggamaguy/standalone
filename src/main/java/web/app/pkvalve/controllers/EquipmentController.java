@@ -16,6 +16,7 @@ import web.app.pkvalve.domains.Company;
 import web.app.pkvalve.domains.Energy;
 import web.app.pkvalve.domains.EqCategory;
 import web.app.pkvalve.domains.Equipment;
+import web.app.pkvalve.domains.EquipmentList;
 import web.app.pkvalve.domains.FuncLoc;
 import web.app.pkvalve.domains.Location;
 import web.app.pkvalve.domains.Proc;
@@ -566,21 +567,74 @@ public class EquipmentController {
 		return json;
 	}
 
-	@RequestMapping(value="/updateEquipment")
-	public JSONObject updateEquipment(@RequestParam("id")String id,
-			@RequestParam("companyCode")String companyCode,
-								@RequestParam("siteCode")String siteCode,
-								@RequestParam("groupCode")String groupCode,
-								@RequestParam("eqCode")String eqCode,
-								@RequestParam("subGroupCode")String subGroupCode,
-								@RequestParam("upperLocationCode")String upperLocationCode,
-								@RequestParam("upperFunctionCode")String upperFunctionCode,
-								@RequestParam("upperProcess")String upperProcess,
-								@RequestParam("energy1")String energy1,
-								@RequestParam("energy2")String energy2,
-								@RequestParam("energy3")String energy3
-								){
-		JSONObject json = new JSONObject();
-		return json;
+	@RequestMapping(value="/updateEquipment", method=RequestMethod.PUT)
+	public int updateEquipment(@RequestParam("jsonData")JSONObject data){
+		int result = 0;
+		Object id = data.get("id");
+		Object companyCode = data.get("companyCode");
+		Object siteCode = data.get("siteCode");
+		Object groupCode = data.get("groupCode");
+		Object eqCode = data.get("eqCode");
+		Object subGroupCode = data.get("subGroupCode");
+		Object location = data.get("location");
+		Object funcLocation = data.get("funcLocation");
+		Object process = data.get("process");
+		Object energy1 = data.get("energy1");
+		Object energy2 = data.get("energy2");
+		Object energy3 = data.get("energy3");
+		
+		EquipmentList eq = new EquipmentList();
+		eq.setId(id.toString());
+		eq.setCompanyCode(companyCode.toString());
+		eq.setSiteCode(siteCode.toString());
+		eq.setGroupCode(groupCode.toString());
+		eq.setEqCode(eqCode.toString());
+		eq.setSubGroupCode(subGroupCode.toString());
+		eq.setLocation(location.toString());
+		eq.setFuncLocation(funcLocation.toString());
+		eq.setProcess(process.toString());
+		eq.setEnergy1(energy1.toString());
+		eq.setEnergy2(energy2.toString());
+		eq.setEnergy3(energy3.toString());
+		
+		result = eqFacade.updateEquipment(eq);
+		return result;
+	}
+
+	@RequestMapping(value="/insertEquipment", method = RequestMethod.POST)
+	public int insertEquipment(@RequestParam("jsonData")JSONObject data){
+
+		Object companyCode = data.get("companyCode");
+		Object siteCode = data.get("siteCode");
+		Object groupCode = data.get("groupCode");
+		Object eqCode = data.get("eqCode");
+		Object subGroupCode = data.get("subGroupCode");
+		Object location = data.get("location");
+		Object funcLocation = data.get("funcLocation");
+		Object process = data.get("process");
+		Object energy1 = data.get("energy1");
+		Object energy2 = data.get("energy2");
+		Object energy3 = data.get("energy3");
+		
+		EquipmentList eq = new EquipmentList();
+		eq.setId(null);
+		eq.setCompanyCode(companyCode.toString());
+		eq.setSiteCode(siteCode.toString());
+		eq.setGroupCode(groupCode.toString());
+		eq.setEqCode(eqCode.toString());
+		eq.setSubGroupCode(subGroupCode.toString());
+		eq.setLocation(location.toString());
+		eq.setFuncLocation(funcLocation.toString());
+		eq.setProcess(process.toString());
+		eq.setEnergy1(energy1.toString());
+		eq.setEnergy2(energy2.toString());
+		eq.setEnergy3(energy3.toString());	
+		
+		return eqFacade.insertEquipment(eq);
+	}
+	@RequestMapping(value="/deleteEquipment", method = RequestMethod.DELETE)
+	public int deleteEquipment(@RequestParam("eqId")String eqId){
+		int result = eqFacade.deleteEquipment(eqId);
+		return result;
 	}
 }

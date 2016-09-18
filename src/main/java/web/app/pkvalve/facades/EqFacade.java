@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import web.app.pkvalve.domains.EqCategory;
 import web.app.pkvalve.domains.Equipment;
+import web.app.pkvalve.domains.EquipmentList;
 import web.app.pkvalve.domains.SubGroup;
 import web.app.pkvalve.interfaces.IEq;
 
@@ -54,6 +55,7 @@ public class EqFacade implements IEq {
 		try {
 			return session.selectList("SubGroupFacade.getEqBySiteUppergroupSubgroup", hashmap);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 
@@ -146,4 +148,33 @@ public class EqFacade implements IEq {
 			return null;
 		}
 	}
+
+	@Override
+	public int updateEquipment(EquipmentList eq) throws DataAccessException {
+		try{
+			return session.update("EqFacade.updateEquipment", eq);
+		}catch(Exception e){
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	@Override
+	public int insertEquipment(EquipmentList eq) throws DataAccessException {
+		try{
+			return session.insert("EqFacade.insertEquipment",eq);
+		}catch(Exception e){
+			return -1;
+		}
+	}
+
+	@Override
+	public int deleteEquipment(String eqId) throws DataAccessException {
+		try{
+			return session.delete("EqFacade.deleteEquipment",eqId);
+		}catch(Exception e){
+			return -1;
+		}
+	}
+
 }
