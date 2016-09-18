@@ -13,14 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import web.app.pkvalve.domains.Company;
+import web.app.pkvalve.domains.Energy;
 import web.app.pkvalve.domains.EqCategory;
 import web.app.pkvalve.domains.Equipment;
+import web.app.pkvalve.domains.FuncLoc;
+import web.app.pkvalve.domains.Location;
+import web.app.pkvalve.domains.Proc;
 import web.app.pkvalve.domains.Site;
 import web.app.pkvalve.domains.SubGroup;
 import web.app.pkvalve.domains.UpperGroup;
 import web.app.pkvalve.facades.CompanyFacade;
 import web.app.pkvalve.facades.EnergyFacade;
 import web.app.pkvalve.facades.EqFacade;
+import web.app.pkvalve.facades.FuncLocFacade;
+import web.app.pkvalve.facades.LocationFacade;
+import web.app.pkvalve.facades.ProcFacade;
 import web.app.pkvalve.facades.SiteFacade;
 import web.app.pkvalve.facades.SubGroupFacade;
 import web.app.pkvalve.facades.UpperGroupFacade;
@@ -40,9 +47,14 @@ public class EquipmentController {
 	EnergyFacade energyFacade;
 	@Autowired
 	CompanyFacade companyFacade;
-
+	@Autowired
+	FuncLocFacade funcLocFacade;
+	@Autowired
+	LocationFacade locationFacade;
+	@Autowired
+	ProcFacade procFacade;
+	
 	@RequestMapping(value = "/equipment", method = RequestMethod.GET)
-
 	public ModelAndView site() {
 		ModelAndView mv = new ModelAndView("equipmentMaster");
 		try {
@@ -95,9 +107,10 @@ public class EquipmentController {
 		return mv;
 	}
 
-	@RequestMapping(value="/getSite", method = RequestMethod.GET,produces="application/json")
-	public JSONObject getSite(){
-			List<Site> siteArray = siteFacade.getAllSiteList();
+	@RequestMapping(value="/getSiteByCompanyCode", method = RequestMethod.GET,produces="application/json")
+	public JSONObject getSite(@RequestParam("companyCode")String companyCode){
+		//System.out.println("aaaaaaa1");
+			List<Site> siteArray = siteFacade.getSiteByCompanyCode(companyCode);
 			JSONObject json = new JSONObject();
 			JSONArray jsonArray = new JSONArray();
 			JSONArray eqCatalogJSONArray = new JSONArray();
@@ -111,8 +124,48 @@ public class EquipmentController {
 			json.clear();
 			json.put("num", jsonArray.size());
 			json.put("content", jsonArray);
+			//System.out.println("sites:"+json);
 			return json;
 	}
+	
+	@RequestMapping(value="/getUpperGroupList", method=RequestMethod.GET, produces="application/json")
+	public JSONObject getUpperGroupList(@RequestParam("siteCode")String siteCode){
+		JSONObject json = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		List<UpperGroup> list = uppergroupFacade.getUpperGroup(siteCode);
+		for(int index = 0; index < list.size();index++){
+			json.put("siteCode", list.get(index).getSiteCode());
+			json.put("groupCode", list.get(index).getGroupCode());
+			json.put("groupName", list.get(index).getGroupName());
+			JSONObject json2 = new JSONObject(json);
+			jsonArray.add(json2);
+		}
+		json.clear();
+		json.put("num", jsonArray.size());
+		json.put("content", jsonArray);
+		//System.out.println(json);
+		return json;
+	}
+	
+	@RequestMapping(value="/getSubGroupList",method=RequestMethod.GET, produces="application/json")
+	public JSONObject getSubGroupList(@RequestParam("groupCode")String groupCode){
+		System.out.println("groupdcode: "+groupCode);
+		JSONObject json = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		List<SubGroup> list = subGroupFacade.getSubGroup(groupCode);
+		for(int index = 0; index < list.size();index++){
+			json.put("subGroupCode", list.get(index).getSubGroupCode());
+			json.put("subGroupName", list.get(index).getSubGroupName());
+			JSONObject tempJson = new JSONObject(json);
+			jsonArray.add(tempJson);
+		}
+		json.clear();
+		json.put("num", jsonArray.size());
+		json.put("content", jsonArray);
+		System.out.println(json);
+		return json;
+	}
+	
 	@RequestMapping(value="/getEqType", method = RequestMethod.GET,produces="application/json")
 	public JSONObject getEqType(){
 		List<EqCategory> eqCatalogArray = eqFacade.getAllEqCategory();
@@ -152,6 +205,92 @@ public class EquipmentController {
 		for(int index = 0; index < list.size();index++){
 			json.put("companyCode", list.get(index).getCompanyCode());
 			json.put("companyName", list.get(index).getCompanyName());
+			JSONObject json2 = new JSONObject(json);
+			jsonArray.add(json2);
+		}
+		json.clear();
+		json.put("num", jsonArray.size());
+		json.put("content", jsonArray);
+		//System.out.println("company:"+json);
+		return json;
+	}
+	
+	@RequestMapping(value="/getAllEqDetail", method=RequestMethod.GET, produces="application/json")
+	public JSONObject getAllEqDetail(){
+		JSONObject json = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		List<EqCategory> list = eqFacade.getAllEqCategory();
+		for(int index = 0;index < list.size();index++){
+			json.put("eqCode", list.get(index).getEqCode());
+			json.put("eqDetail", list.get(index).getEqDetail());
+			JSONObject json2 = new JSONObject(json);
+			jsonArray.add(json2);
+		}
+		json.clear();
+		json.put("num", jsonArray.size());
+		json.put("content", jsonArray);
+		return json;
+	}
+	
+	@RequestMapping(value="/getAllFuncLoc", method=RequestMethod.GET, produces="application/json")
+	public JSONObject getAllFuncLoc(){
+		JSONObject json = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		List<FuncLoc> list = funcLocFacade.getAllFuncLocList();
+		for(int index = 0; index < list.size();index++){
+			json.put("functionCode", list.get(index).getFunctionCode());
+			json.put("funcDesc", list.get(index).getFuncDesc());
+			json.put("funcLoc", list.get(index).getFuncLoc());
+			JSONObject json2 = new JSONObject(json);
+			jsonArray.add(json2);
+		}
+		json.clear();
+		json.put("num", jsonArray.size());
+		json.put("content", jsonArray);
+		return json;
+	}
+	@RequestMapping(value="/getAllLoc", method=RequestMethod.GET, produces="application/json")
+	public JSONObject getAllLoc(){
+		JSONObject json = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		List<Location> list = locationFacade.getAllLocList();
+		for(int index = 0; index < list.size();index++){
+			json.put("locationCode", list.get(index).getLocationCode());
+			json.put("location", list.get(index).getLocation());
+			JSONObject json2 = new JSONObject(json);
+			jsonArray.add(json2);
+		}
+		json.clear();
+		json.put("num", jsonArray.size());
+		json.put("content", jsonArray);
+		return json;
+	}
+	
+	@RequestMapping(value="/getAllProcList", method=RequestMethod.GET, produces="application/json")
+	public JSONObject getAllProcList(){
+		JSONObject json = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		List<Proc> list = procFacade.getAllProcList();
+		for(int index = 0; index < list.size();index++){
+			json.put("processCode", list.get(index).getProcessCode());
+			json.put("processName", list.get(index).getProcessName());
+			JSONObject json2 = new JSONObject(json);
+			jsonArray.add(json2);
+		}
+		json.clear();
+		json.put("num", jsonArray.size());
+		json.put("content", jsonArray);
+		return json;
+	}
+	
+	@RequestMapping(value="/getAllEnergyType", method=RequestMethod.GET, produces="application/json")
+	public JSONObject getAllEnergyType(){
+		JSONObject json = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		List<Energy> list = energyFacade.getAllEnergyType();
+		for(int index = 0; index < list.size();index++){
+			json.put("energyCode", list.get(index).getEnergyCode());
+			json.put("energyType", list.get(index).getEnergyType());
 			JSONObject json2 = new JSONObject(json);
 			jsonArray.add(json2);
 		}
@@ -200,7 +339,7 @@ public class EquipmentController {
 		json.put("content", jsonArray);
 		json.put("rowNum", jsonArrayForTable.size());
 		json.put("table", jsonArrayForTable);
-		System.out.println(json);
+		//System.out.println(json);
 		return json;
 	}
 
@@ -242,7 +381,7 @@ public class EquipmentController {
 		json.put("content", jsonArray);
 		json.put("rowNum", jsonArrayForTable.size());
 		json.put("table", jsonArrayForTable);
-		System.out.println(json);
+		//System.out.println(json);
 		return json;
 	}
 	
@@ -326,6 +465,7 @@ public class EquipmentController {
 		
 		return json;
 	}
+	
 	@RequestMapping(value="/getUsingGroup",method= RequestMethod.POST, produces="application/json")
 	public JSONObject getUsingGroup(@RequestParam("eqType")String eqType, @RequestParam("eqDetail")String eqDetail) throws UnsupportedEncodingException{
 		List<SubGroup> list = eqFacade.getSubGroupNameByEqTypeEqDetail(eqType, eqDetail);
@@ -397,7 +537,7 @@ public class EquipmentController {
 		json.clear();
 		json.put("rowNum", eqTableJSONArray.size());
 		json.put("table",eqTableJSONArray);
-		System.out.println(json);
+		//System.out.println(json);
 		return json;
 	}
 	
@@ -422,7 +562,25 @@ public class EquipmentController {
 		json.put("energy2", equipment.getEnergyCode2());
 		equipment.setEnergyCode3(energyFacade.getEnergyType(equipment.getEnergyCode3()));
 		json.put("energy3", equipment.getEnergyCode3());
-		System.out.println(json);
+		//System.out.println(json);
+		return json;
+	}
+
+	@RequestMapping(value="/updateEquipment")
+	public JSONObject updateEquipment(@RequestParam("id")String id,
+			@RequestParam("companyCode")String companyCode,
+								@RequestParam("siteCode")String siteCode,
+								@RequestParam("groupCode")String groupCode,
+								@RequestParam("eqCode")String eqCode,
+								@RequestParam("subGroupCode")String subGroupCode,
+								@RequestParam("upperLocationCode")String upperLocationCode,
+								@RequestParam("upperFunctionCode")String upperFunctionCode,
+								@RequestParam("upperProcess")String upperProcess,
+								@RequestParam("energy1")String energy1,
+								@RequestParam("energy2")String energy2,
+								@RequestParam("energy3")String energy3
+								){
+		JSONObject json = new JSONObject();
 		return json;
 	}
 }

@@ -15,7 +15,7 @@
 	<select id="getEqBySiteUppergroup" resultType="web.app.pkvalve.domains.Equipment" parameterType="hashmap" >
 	select
 		equipments.id,
-		companyCode,
+		company.companyCode,
 		site.siteName,
 		uppergroup.groupName,
 		equipments.eqCode,
@@ -28,6 +28,7 @@
 		equipments.energyCode2,
 		equipments.energyCode3
 	from equipments
+		join company on company.companyCode = equipments.companyCode
 		join eqcatalog on equipments.eqCode = eqcatalog.eqCode
 		join site on equipments.siteCode = site.siteCode
 		join uppergroup on equipments.groupCode = uppergroup.groupCode

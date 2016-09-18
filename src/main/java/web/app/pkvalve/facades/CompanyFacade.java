@@ -20,6 +20,7 @@ public class CompanyFacade implements ICompany{
 		try{
 			return session.selectList("CompanyFacade.getAllCompany");
 		}catch(Exception e){
+			e.printStackTrace();
 			return null;
 		}
 	}

@@ -25,7 +25,20 @@ public class SiteFacade implements ISite {
 			return null;
 		}
 	}
-
+	
+	@Override
+	public List<Site> getSiteByCompanyCode(String companyCode) throws DataAccessException {
+		HashMap<String,String> hashmap = new HashMap<String,String>();
+		hashmap.put("companyCode", companyCode);
+		//System.out.println("aaaaaaa");
+		try{
+			return session.selectList("SiteFacade.getSiteByCompanyCode", hashmap);
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	@Override
 	public int insertSite(String companyCode, String siteCode, String siteName) throws DataAccessException {
 		HashMap<String,String> hashmap = new HashMap<String,String>();
@@ -67,6 +80,5 @@ public class SiteFacade implements ISite {
 			return -1;
 		}
 	}
-	
 	
 }

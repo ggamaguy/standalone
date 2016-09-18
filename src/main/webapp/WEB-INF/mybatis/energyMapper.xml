@@ -3,6 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="EnergyFacade">
+	<select id="getAllEnergyType" resultType="web.app.pkvalve.domains.Energy">
+		select
+			energyCode,
+			energyType
+		from
+			energy
+	</select>
 	<select id="getEnergyType" resultType="String">
 		select
 			energyType

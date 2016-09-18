@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FuncLocFacade">
+	<select id="getAllFuncLocList" resultType="web.app.pkvalve.domains.FuncLoc">
+		select 
+			functionCode,
+			funcDesc,
+			funcLoc
+		from 
+			func
+	</select>
+</mapper>

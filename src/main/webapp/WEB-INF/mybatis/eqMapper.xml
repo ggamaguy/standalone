@@ -37,6 +37,7 @@
 	</select>
 	<select id="getEqTableByEqType" resultType="web.app.pkvalve.domains.Equipment" parameterType="hashmap">
 	select
+		equipments.id,
 		company.companyCode,
 		site.siteName,
 		uppergroup.groupName,
@@ -61,6 +62,7 @@
 	</select>
 	<select id="getEqTableByEqTypeEqDetail" resultType="web.app.pkvalve.domains.Equipment" parameterType="hashmap">
 	select
+		equipments.id,
 		company.companyCode,
 		site.siteName,
 		uppergroup.groupName,
@@ -85,6 +87,7 @@
 	</select>
 	<select id="getEqTableByEqTypeEqDetailSubGroupName" resultType="web.app.pkvalve.domains.Equipment" parameterType="hashmap">
 	select
+		equipments.id,
 		company.companyCode,
 		site.siteName,
 		uppergroup.groupName,
@@ -112,8 +115,8 @@
 
 	<select id="getEqByEqId" resultType="web.app.pkvalve.domains.Equipment">
 	select
-		company.id,
-		equipments.companyCode,
+		equipments.id,
+		company.companyCode,
 		site.siteName,
 		uppergroup.groupName,
 		eqcatalog.eqCode,
@@ -136,4 +139,18 @@
 			join proc on equipments.upperProcessCode = proc.processCode
 	where equipments.id = ${eqId}
 	</select>
+
+	<update id="updateCompanyCode">
+		update equipments set where
+	</update>
+	<update id="updateSiteCode"></update>
+	<update id="updateGroupCode"></update>
+	<update id="updateEqCode"></update>
+	<update id="updateSubGroupCode"></update>
+	<update id="updateLocation"></update>
+	<update id="updateFuncLocation"></update>
+	<update id="updateProcess"></update>
+	<update id="updateEnergy1"></update>
+	<update id="updateEnergy2"></update>
+	<update id="updateEnergy3"></update>
 </mapper>

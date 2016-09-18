@@ -11,6 +11,16 @@
 		from
 			site
 	</select>
+	<select id="getSiteByCompanyCode" resultType="web.app.pkvalve.domains.Site">
+		select
+			companyCode,
+			siteCode,
+			siteName
+		from
+			site
+		where
+			companyCode = #{companyCode}
+	</select>
 	<select id="getEqBySite" resultType="web.app.pkvalve.domains.Equipment" parameterType="hashMap">
 	select
 		equipments.id,

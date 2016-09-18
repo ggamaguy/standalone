@@ -19,10 +19,6 @@ function clickEqTableRow(value) {
 	});
 }
 
-function addNewEq() {
-	$("#newEqModal").modal('show');
-}
-
 function resetSiteSelection() {
 	$("#default-site")
 			.replaceWith(

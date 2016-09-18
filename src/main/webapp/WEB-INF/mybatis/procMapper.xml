@@ -2,12 +2,12 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="CompanyFacade">
-	<select id="getAllCompany" resultType="web.app.pkvalve.domains.Company">
-		select
-			companyCode,
-			companyName
-		from
-			company
+<mapper namespace="ProcFacade">
+	<select id="getAllProcList" resultType="web.app.pkvalve.domains.Proc">
+		select 
+			processCode,
+			processName
+		from 
+			proc
 	</select>
 </mapper>
